@@ -1,12 +1,12 @@
 use crate::env::{EmptyEnvironment, Environment};
-use crate::types::{Task, TaskInfo, ChairmanDaoStableStorage, Reputation, Account, TaskState};
+use crate::types::{Task, TaskInfo, ChairmanDaoStableStorage, Account, TaskState};
 use candid::Principal;
 use std::collections::HashMap;
 
 /// Implements the Basic DAO interface
 pub struct ChairmanDaoService {
     pub env: Box<dyn Environment>,
-    pub accounts: HashMap<Principal, Reputation>,
+    pub accounts: HashMap<Principal, u64>,
     pub tasks: HashMap<u64, Task>,
     pub next_task_id: u64,
 }
@@ -49,7 +49,7 @@ impl From<ChairmanDaoStableStorage> for ChairmanDaoService {
 /// Implements the Basic DAO interface
 impl ChairmanDaoService {
     /// Return the account balance of the caller
-    pub fn account_reputation(&self) -> Reputation {
+    pub fn account_reputation(&self) -> u64 {
         let caller = self.env.caller();
         self.accounts
             .get(&caller)
