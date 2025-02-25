@@ -1,0 +1,50 @@
+type ChairmanDaoStableStorage = record {
+    accounts: vec Account;
+    tasks: vec Task;
+};
+
+type Reputation = record {
+    amount_e8s: nat64;
+};
+
+type TaskState = variant {
+    // The task is open for claim
+    Open;
+
+    // The task can no longer be claimed
+    Closed;
+};
+
+type Task = record {
+    id: nat64;
+    creator: principal;
+    state: TaskState;
+    task_info: TaskInfo;
+};
+
+type TaskInfo = record {
+    name: text;
+    description: text;
+    proposed_amount: Reputation;
+};
+
+type SubmitTaskResult = variant {
+    Ok: nat64;
+    Err: text;
+};
+
+type Account = record {
+    owner: principal;
+    reputation: Reputation;
+};
+
+service : (ChairmanDaoStableStorage) -> {
+    // Returns the amount of reputation the caller has
+    account_reputation: () -> (Reputation) query;
+
+    // Lists all accounts
+    list_accounts: () -> (vec Account) query;
+
+    // Submit a task
+    submit_task: (TaskInfo) -> (SubmitTaskResult);
+}

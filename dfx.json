@@ -1,0 +1,9 @@
+{
+  "canisters": {
+    "chairman_dao": {
+      "candid": "src/chairman_dao/src/chairman_dao.did",
+      "type": "rust",
+      "package": "chairman_dao"
+    }
+  }
+}
