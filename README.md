@@ -4,16 +4,18 @@ Brought to you by the snek oil shillers.
 
 ## Install
 
-Install the dependencies via:
+Install the React FE via:
 
 ```
-python install -r requirements.txt
+# install Node
+npm create vite@4.1.0
 ```
 
-## UI
+## React Frontend
 
-Launch the UI by doing:
+Launch the FE by doing:
 
 ```
-python ui/main.py
+cd web
+npm run dev
 ```
