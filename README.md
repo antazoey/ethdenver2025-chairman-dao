@@ -7,6 +7,23 @@ Brought to you by the Snek-oil Shillers.
 Ensure you have `dfx` installed by following [this guide](https://internetcomputer.org/docs/current/developer-docs/getting-started/install).
 You also need Python 3.13 to run the demo.
 
+Install the React FE via:
+
+```
+# install Node
+npm create vite@4.1.0
+```
+
+## React Frontend
+
+Launch the FE by doing:
+
+```
+cd web
+npm run dev
+```
+
+
 ## Demo
 
 To execute the demo script, run:
