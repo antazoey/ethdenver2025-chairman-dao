@@ -58,9 +58,11 @@ class Dfx:
     def call(
         cls, canister_name: str, method_name: str, arguments: str | None = None
     ) -> str:
-        return cls._run(
-            "canister", "call", canister_name, method_name, arguments or "()"
-        )
+        arguments = arguments or "()"
+        if not arguments.startswith("("):
+            arguments = f"({arguments})"
+
+        return cls._run("canister", "call", canister_name, method_name, arguments)
 
     @staticmethod
     def _run(*cmd, allow_failure: bool = False, pipe: bool = True) -> str:
@@ -113,3 +115,16 @@ def print_output(msg: str):
 def clean():
     path = Path(__file__).parent / ".dfx"
     shutil.rmtree(path, ignore_errors=True)
+
+
+def make_record(data: str, suffix: str = ";") -> str:
+    return f"record {{ {data} }}{suffix}"
+
+
+def dict_to_record(data: dict, **kwargs) -> str:
+    builder = ""
+    for key, value in data.items():
+        item = f"{key} = {value};"
+        builder += f"{item} "
+
+    return make_record(builder, **kwargs)

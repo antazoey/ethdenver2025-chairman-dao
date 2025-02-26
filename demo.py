@@ -4,7 +4,14 @@ Demo a fake coffee shop that makes coffee for Web3 devs.
 
 from contextlib import contextmanager
 
-from _util import Dfx, clean, dfx_network_context, print_output
+from _util import (
+    Dfx,
+    clean,
+    dfx_network_context,
+    dict_to_record,
+    make_record,
+    print_output,
+)
 
 # Initial employees => reputation points
 EMPLOYEES = {
@@ -41,9 +48,25 @@ def run_demo():
     # dfx deploy --argument INIT-DATA
     deploy_canister(alice, bob, chris)
 
-    # Show we have the accounts.
+    print("WELCOME TO COFFEE CORP")
+    print("Employees:")
     accounts = Dfx.call(CANISTER_NAME, "list_accounts")
     print_output(accounts)
+    print()
+
+    print("What's that, Chris? You want to create a Task... Ok then.")
+    task_data = {
+        "name": '"Upsold VIP table"',
+        "description": '"A customer wanted a drink but I sold them a VIP table instead, increasing the sale by about 100x."',
+        "proposed_amount": 10,
+    }
+    task = dict_to_record(task_data, suffix="")
+    Dfx.call(CANISTER_NAME, "submit_task", f"{task}")
+    print("Task created.")
+
+    print("Showing all tasks")
+    tasks = Dfx.call(CANISTER_NAME, "list_tasks")
+    print_output(tasks)
 
 
 def create_and_build_canisters():
@@ -72,12 +95,17 @@ def deploy_canister(alice, bob, chris):
     alice_str = _make_account_str("Alice", alice)
     bob_str = _make_account_str("Bob", bob)
     chris_str = _make_account_str("Chris", chris)
-    data = f"(record {{ accounts = vec {{ {alice_str} {bob_str} {chris_str} }}; tasks = vec {{}}; }})"
+    data_str = (
+        f"accounts = vec {{ {alice_str} {bob_str} {chris_str} }}; tasks = vec {{}};"
+    )
+    data = f"({make_record(data_str, suffix='')})"
     Dfx.deploy(CANISTER_NAME, data)
 
 
 def _make_account_str(name: str, principal: str) -> str:
-    return f'record {{ owner = principal "{principal}"; reputation = {EMPLOYEES[name]}; }};'
+    return dict_to_record(
+        {"owner": f'principal "{principal}"', "reputation": EMPLOYEES[name]}
+    )
 
 
 if __name__ == "__main__":
