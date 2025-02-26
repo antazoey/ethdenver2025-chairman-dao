@@ -14,7 +14,7 @@ thread_local! {
 
 #[query]
 #[candid::candid_method(query)]
-fn account_balance() -> Reputation {
+fn account_balance() -> u64 {
     SERVICE.with(|service| service.borrow().account_reputation())
 }
 
@@ -24,9 +24,15 @@ fn list_accounts() -> Vec<Account> {
     SERVICE.with(|service| service.borrow().list_accounts())
 }
 
+#[query]
+#[candid::candid_method(query)]
+fn list_tasks() -> Vec<Task> {
+    SERVICE.with(|service| service.borrow().list_tasks())
+}
+
 #[update]
 #[candid::candid_method]
-fn submit_proposal(task: TaskInfo) -> Result<u64, String> {
+fn submit_task(task: TaskInfo) -> Result<u64, String> {
     SERVICE.with(|service| service.borrow_mut().submit_task(task))
 }
 

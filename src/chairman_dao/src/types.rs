@@ -1,5 +1,4 @@
 use candid::{CandidType, Deserialize, Principal};
-use std::ops::{Add, AddAssign, Mul, SubAssign};
 
 #[derive(Clone, Debug, Default, CandidType, Deserialize)]
 pub struct ChairmanDaoStableStorage {
@@ -7,41 +6,6 @@ pub struct ChairmanDaoStableStorage {
     pub tasks: Vec<Task>,
 }
 
-#[derive(Clone, Copy, Debug, Default, CandidType, Deserialize, PartialEq, PartialOrd)]
-pub struct Reputation {
-    pub amount_e8s: u64,
-}
-
-impl Add for Reputation {
-    type Output = Self;
-
-    fn add(self, other: Self) -> Self {
-        Reputation {
-            amount_e8s: self.amount_e8s + other.amount_e8s,
-        }
-    }
-}
-
-impl AddAssign for Reputation {
-    fn add_assign(&mut self, other: Self) {
-        self.amount_e8s += other.amount_e8s;
-    }
-}
-
-impl SubAssign for Reputation {
-    fn sub_assign(&mut self, other: Self) {
-        self.amount_e8s -= other.amount_e8s;
-    }
-}
-
-impl Mul<u64> for Reputation {
-    type Output = Reputation;
-    fn mul(self, rhs: u64) -> Self {
-        Reputation {
-            amount_e8s: self.amount_e8s * rhs,
-        }
-    }
-}
 
 // The state of a task
 #[derive(Clone, Debug, CandidType, Deserialize, PartialEq)]
@@ -62,11 +26,35 @@ pub struct Task {
 pub struct TaskInfo {
     pub name: String,
     pub description: String,
-    pub proposed_amount: Reputation,
+    pub proposed_amount: u64,
 }
 
 #[derive(Clone, Debug, CandidType, Deserialize)]
 pub struct Account {
     pub owner: Principal,
-    pub reputation: Reputation,
+    pub reputation: u64,
+}
+
+#[derive(Clone, Debug, CandidType, Deserialize)]
+pub struct Proposal {
+    pub id: u64,
+    pub proposer: Principal,
+    pub payload: ProposalPayload,
+    pub proposal_state: ProposalState,
+    pub votes_yes_count: u64,
+    pub votes_no_count: u64,
+    pub voters: Vec<Principal>,
+}
+
+#[derive(Clone, Debug, CandidType, Deserialize)]
+pub struct ProposalPayload {
+    pub proposer: Principal,
+    pub cost: u64,
+}
+
+#[derive(Clone, Debug, CandidType, Deserialize, PartialEq)]
+pub enum ProposalState {
+    Open,
+    Accepted,
+    Rejected,
 }
