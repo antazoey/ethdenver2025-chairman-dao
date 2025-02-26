@@ -24,6 +24,12 @@ fn list_accounts() -> Vec<Account> {
     SERVICE.with(|service| service.borrow().list_accounts())
 }
 
+#[query]
+#[candid::candid_method(query)]
+fn list_tasks() -> Vec<Task> {
+    SERVICE.with(|service| service.borrow().list_tasks())
+}
+
 #[update]
 #[candid::candid_method]
 fn submit_task(task: TaskInfo) -> Result<u64, String> {

@@ -34,3 +34,27 @@ pub struct Account {
     pub owner: Principal,
     pub reputation: u64,
 }
+
+#[derive(Clone, Debug, CandidType, Deserialize)]
+pub struct Proposal {
+    pub id: u64,
+    pub proposer: Principal,
+    pub payload: ProposalPayload,
+    pub proposal_state: ProposalState,
+    pub votes_yes_count: u64,
+    pub votes_no_count: u64,
+    pub voters: Vec<Principal>,
+}
+
+#[derive(Clone, Debug, CandidType, Deserialize)]
+pub struct ProposalPayload {
+    pub proposer: Principal,
+    pub cost: u64,
+}
+
+#[derive(Clone, Debug, CandidType, Deserialize, PartialEq)]
+pub enum ProposalState {
+    Open,
+    Accepted,
+    Rejected,
+}

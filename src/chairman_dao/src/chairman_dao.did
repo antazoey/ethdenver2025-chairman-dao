@@ -6,10 +6,7 @@ type ChairmanDaoStableStorage = record {
 type reputation = nat64;
 
 type TaskState = variant {
-    // The task is open for claim
     Open;
-
-    // The task can no longer be claimed
     Closed;
 };
 
@@ -26,7 +23,7 @@ type TaskInfo = record {
     proposed_amount: reputation;
 };
 
-type SubmitTaskResult = variant {
+type ActionResult = variant {
     Ok: nat64;
     Err: text;
 };
@@ -36,13 +33,30 @@ type Account = record {
     reputation: reputation;
 };
 
+type Proposal = record {
+    id: nat64;
+    proposer: principal;
+    payload: ProposalPayload;
+    state: ProposalState;
+    votes_yes: reputation;
+    votes_no: reputation;
+    voters: vec principal;
+};
+
+type ProposalPayload = record {
+    description: text;
+    cost: nat64;
+};
+
+type ProposalState = variant {
+    Open;
+    Accepted;
+    Rejected;
+};
+
 service : (ChairmanDaoStableStorage) -> {
-    // Returns the amount of reputation the caller has
     account_reputation: () -> (reputation) query;
-
-    // Lists all accounts
     list_accounts: () -> (vec Account) query;
-
-    // Submit a task
-    submit_task: (TaskInfo) -> (SubmitTaskResult);
+    submit_task: (TaskInfo) -> (ActionResult);
+    submit_proposal: (ProposalPayload) -> (ActionResult);
 }

@@ -1,14 +1,26 @@
+from contextlib import contextmanager
+from functools import wraps
 from subprocess import PIPE, run
 
 
 class Dfx:
     @classmethod
     def start(cls):
-        cls._run("start", "--background", allow_failure=True)
+        cls._run("start", "--background", allow_failure=True, pipe=False)
 
     @classmethod
-    def create_canisters(cls, all: bool = False):
+    def stop(cls):
+        cls._run("stop", allow_failure=True, pipe=False)
+
+    @classmethod
+    def get_canister_id(cls, name: str) -> str:
+        return cls._run("canister", "id", name)
+
+    @classmethod
+    def create_canisters(cls, name: str | None = None, all: bool = False):
         cmd = ["canister", "create"]
+        if name:
+            cmd.append(name)
         if all:
             cmd.append("--all")
 
@@ -43,13 +55,57 @@ class Dfx:
 
         cls._run(*cmd)
 
+    @classmethod
+    def call(
+        cls, canister_name: str, method_name: str, arguments: str | None = None
+    ) -> str:
+        return cls._run(
+            "canister", "call", canister_name, method_name, arguments or "()"
+        )
+
     @staticmethod
-    def _run(*cmd, allow_failure: bool = False) -> str:
+    def _run(*cmd, allow_failure: bool = False, pipe: bool = True) -> str:
         cmd = ["dfx", *cmd]
-        print(" ".join(cmd))
-        process = run(cmd, stdout=PIPE, stderr=PIPE)
+        print_input(" ".join(cmd))
+
+        if pipe:
+            stdout = PIPE
+            stderr = PIPE
+        else:
+            stdout = None
+            stderr = None
+
+        process = run(cmd, stdout=stdout, stderr=stderr)
         if not allow_failure and process.returncode != 0:
             raise ValueError(process.stderr.decode("utf8"))
 
-        result = process.stdout.decode("utf8")
-        return result.strip()
+        if pipe:
+            result = process.stdout.decode("utf8")
+            return result.strip()
+
+        return ""
+
+
+@contextmanager
+def dfx_network_context():
+    Dfx.start()
+    try:
+        yield
+    finally:
+        Dfx.stop()
+
+
+def dfx_local_network(func):
+    def fn():
+        with dfx_network_context():
+            return func()
+
+    return fn
+
+
+def print_input(msg: str):
+    print(f"Input: {msg}")
+
+
+def print_output(msg: str):
+    print(f"Output: {msg}")

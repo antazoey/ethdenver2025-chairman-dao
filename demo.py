@@ -2,7 +2,7 @@
 Demo a fake coffee shop that makes coffee for Web3 devs.
 """
 
-from _util import Dfx
+from _util import Dfx, dfx_local_network, dfx_network_context, print_output
 
 # Initial employees => reputation points
 EMPLOYEES = {
@@ -10,31 +10,34 @@ EMPLOYEES = {
     "Bob": 10,
     "Chris": 5,
 }
+CANISTER_NAME = "chairman_dao"
 
 
+# @dfx_local_network
 def main():
-    # dfx start
-    ensure_network_running()
+    with dfx_network_context():
+        # dfx canister create chairman_dao
+        # dfx build
+        create_and_build_canisters()
 
-    # dfx canister create --all
-    # dfx build
-    create_and_build_canisters()
+        # dfx identity new --disable-encryption Alice|Bob|Chris
+        # dfx identity get-principal --identity Alice|Bob|Chris
+        alice, bob, chris = setup_employees()
 
-    # dfx identity new --disable-encryption Alice|Bob|Chris
-    # dfx identity get-principal --identity Alice|Bob|Chris
-    alice, bob, chris = setup_employees()
+        # dfx deploy --argument INIT-DATA
+        deploy_canister(alice, bob, chris)
 
-    # dfx deploy --argument INIT-DATA
-    deploy_canister(alice, bob, chris)
-
-
-def ensure_network_running():
-    Dfx.start()
+        accounts = Dfx.call(CANISTER_NAME, "list_accounts")
+        print_output(accounts)
 
 
 def create_and_build_canisters():
-    Dfx.create_canisters(all=True)
-    Dfx.build()
+    try:
+        Dfx.get_canister_id(CANISTER_NAME)
+    except ValueError:
+        # Create them.
+        Dfx.create_canisters()
+        Dfx.build()
 
 
 def setup_employees() -> list[str]:
@@ -52,7 +55,7 @@ def setup_employees() -> list[str]:
 
 def deploy_canister(alice, bob, chris):
     data = f"(record {{ accounts = vec {{ record {{ owner = principal \"{alice}\"; reputation = {EMPLOYEES['Alice']}; }}; }}; tasks = vec {{}}; }})"
-    Dfx.deploy("chairman_dao", data)
+    Dfx.deploy(CANISTER_NAME, data)
 
 
 if __name__ == "__main__":
