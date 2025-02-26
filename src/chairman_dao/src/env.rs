@@ -1,3 +1,5 @@
+// Inspired from https://github.com/dfinity/examples/tree/master/rust/basic_dao
+
 use candid::Principal;
 
 /// The functions that are provided by the environment that the canister runs in

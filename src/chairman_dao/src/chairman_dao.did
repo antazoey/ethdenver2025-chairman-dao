@@ -1,62 +1,26 @@
+type Account = record { owner : principal; spirit : nat64; health : nat64 };
 type ChairmanDaoStableStorage = record {
-    accounts: vec Account;
-    tasks: vec Task;
+  tasks : vec Task;
+  accounts : vec Account;
 };
-
-type reputation = nat64;
-
-type TaskState = variant {
-    Open;
-    Closed;
-};
-
+type Result = variant { Ok : nat64; Err : text };
 type Task = record {
-    id: nat64;
-    creator: principal;
-    state: TaskState;
-    task_info: TaskInfo;
+  id : nat64;
+  creator : principal;
+  info : TaskInfo;
+  state : TaskState;
 };
-
 type TaskInfo = record {
-    name: text;
-    description: text;
-    proposed_amount: reputation;
+  name : text;
+  description : text;
+  proposed_amount : nat64;
 };
-
-type ActionResult = variant {
-    Ok: nat64;
-    Err: text;
-};
-
-type Account = record {
-    owner: principal;
-    reputation: reputation;
-};
-
-type Proposal = record {
-    id: nat64;
-    proposer: principal;
-    payload: ProposalPayload;
-    state: ProposalState;
-    votes_yes: reputation;
-    votes_no: reputation;
-    voters: vec principal;
-};
-
-type ProposalPayload = record {
-    description: text;
-    cost: nat64;
-};
-
-type ProposalState = variant {
-    Open;
-    Accepted;
-    Rejected;
-};
-
+type TaskState = variant { Open; Closed };
 service : (ChairmanDaoStableStorage) -> {
-    account_reputation: () -> (reputation) query;
-    list_accounts: () -> (vec Account) query;
-    submit_task: (TaskInfo) -> (ActionResult);
-    submit_proposal: (ProposalPayload) -> (ActionResult);
+  get_account : () -> (Account) query;
+  get_proposal : (nat64) -> (opt Task) query;
+  list_accounts : () -> (vec Account) query;
+  list_proposals : () -> (vec Task) query;
+  list_tasks : () -> (vec Task) query;
+  submit_task : (TaskInfo) -> (Result);
 }

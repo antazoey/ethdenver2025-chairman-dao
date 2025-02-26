@@ -1,3 +1,5 @@
+// Inspired from https://github.com/dfinity/examples/tree/master/rust/basic_dao
+
 use crate::env::{EmptyEnvironment, Environment};
 use crate::types::{Task, TaskInfo, ChairmanDaoStableStorage, Account, TaskState};
 use candid::Principal;
@@ -6,7 +8,7 @@ use std::collections::HashMap;
 /// Implements the Basic DAO interface
 pub struct ChairmanDaoService {
     pub env: Box<dyn Environment>,
-    pub accounts: HashMap<Principal, u64>,
+    pub accounts: HashMap<Principal, Account>,
     pub tasks: HashMap<u64, Task>,
     pub next_task_id: u64,
 }
@@ -28,7 +30,7 @@ impl From<ChairmanDaoStableStorage> for ChairmanDaoService {
             .accounts
             .clone()
             .into_iter()
-            .map(|a| (a.owner, a.reputation))
+            .map(|a| (a.owner, a))
             .collect();
         let tasks = stable
             .tasks
@@ -49,12 +51,12 @@ impl From<ChairmanDaoStableStorage> for ChairmanDaoService {
 /// Implements the Basic DAO interface
 impl ChairmanDaoService {
     /// Return the account balance of the caller
-    pub fn account_reputation(&self) -> u64 {
+    pub fn get_account(&self) -> Account {
         let caller = self.env.caller();
         self.accounts
             .get(&caller)
             .cloned()
-            .unwrap_or_else(|| Default::default())
+            .unwrap()
     }
 
     /// Lists all accounts
@@ -62,7 +64,7 @@ impl ChairmanDaoService {
         self.accounts
             .clone()
             .into_iter()
-            .map(|(owner, reputation)| Account { owner, reputation })
+            .map(|(_, account)| account)
             .collect()
     }
 
@@ -72,9 +74,9 @@ impl ChairmanDaoService {
 
         let task = Task {
             id: task_id,
-            task_info: info,
             creator: self.env.caller(),
-            task_state: TaskState::Open,
+            state: TaskState::Open,
+            info,
         };
 
         self.tasks.insert(task_id, task);

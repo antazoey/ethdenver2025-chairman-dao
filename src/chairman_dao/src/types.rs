@@ -1,3 +1,5 @@
+// Inspired from https://github.com/dfinity/examples/tree/master/rust/basic_dao
+
 use candid::{CandidType, Deserialize, Principal};
 
 #[derive(Clone, Debug, Default, CandidType, Deserialize)]
@@ -18,8 +20,8 @@ pub enum TaskState {
 pub struct Task {
     pub id: u64,
     pub creator: Principal,
-    pub task_state: TaskState,
-    pub task_info: TaskInfo
+    pub state: TaskState,
+    pub info: TaskInfo
 }
 
 #[derive(Clone, Debug, CandidType, Deserialize)]
@@ -32,9 +34,9 @@ pub struct TaskInfo {
 #[derive(Clone, Debug, CandidType, Deserialize)]
 pub struct Account {
     pub owner: Principal,
-    pub reputation: u64,
+    pub health: u64,
+    pub spirit: u64,
 }
-
 #[derive(Clone, Debug, CandidType, Deserialize)]
 pub struct Proposal {
     pub id: u64,

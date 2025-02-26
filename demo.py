@@ -2,41 +2,87 @@
 Demo a fake coffee shop that makes coffee for Web3 devs.
 """
 
-from contextlib import contextmanager
+import shutil
+from pathlib import Path
+
+import click
 
 from _util import (
+    CandidExtractor,
     Dfx,
-    clean,
     dfx_network_context,
     dict_to_record,
     make_record,
     print_output,
 )
 
-# Initial employees => reputation points
+# Initial employees => (health, spirit) points
 EMPLOYEES = {
-    "Alice": 20,
-    "Bob": 10,
-    "Chris": 5,
+    "Alice": (20, 10),
+    "Bob": (10, 0),
+    "Chris": (0, 5),
 }
 CANISTER_NAME = "chairman_dao"
 
 
+@click.group()
+def dao_demo():
+    """
+    ETHDenver 2025 DAO demo
+    """
+
+
+@dao_demo.command()
+def setup():
+    """
+    Ensures project is setup, build, and devnode running
+    """
+    dfx_path = Path(__file__) / ".dfx"
+    shutil.rmtree(dfx_path, ignore_errors=True)
+    Dfx.start()
+    _setup()
+
+
+@dao_demo.command()
+def list_accounts():
+    """
+    Ensures project is setup, build, and devnode running
+    """
+    accounts = Dfx.call(CANISTER_NAME, "list_accounts")
+    print_output(accounts)
+
+
+@dao_demo.command()
+def create_task():
+    """
+    Ensures project is setup, build, and devnode running
+    """
+    task_data = {
+        "name": '"Upsold VIP table"',
+        "description": '"A customer wanted a drink but I sold them a VIP table instead, increasing the sale by about 100x."',
+        "proposed_amount": 10,
+    }
+    task = dict_to_record(task_data, suffix="")
+    Dfx.call(CANISTER_NAME, "submit_task", f"{task}")
+    print("Task created.")
+
+
+@dao_demo.command()
+def list_tasks():
+    """
+    Ensures project is setup, build, and devnode running
+    """
+    print("Showing all tasks")
+    tasks = Dfx.call(CANISTER_NAME, "list_tasks")
+    print_output(tasks)
+
+
 def main():
-    with fresh_context():
+    with dfx_network_context():
         run_demo()
 
 
-@contextmanager
-def fresh_context():
-    with dfx_network_context():
-        try:
-            yield
-        finally:
-            clean()
-
-
-def run_demo():
+def _setup():
     # dfx canister create chairman_dao
     # dfx build
     create_and_build_canisters()
@@ -48,34 +94,11 @@ def run_demo():
     # dfx deploy --argument INIT-DATA
     deploy_canister(alice, bob, chris)
 
-    print("WELCOME TO COFFEE CORP")
-    print("Employees:")
-    accounts = Dfx.call(CANISTER_NAME, "list_accounts")
-    print_output(accounts)
-    print()
-
-    print("What's that, Chris? You want to create a Task... Ok then.")
-    task_data = {
-        "name": '"Upsold VIP table"',
-        "description": '"A customer wanted a drink but I sold them a VIP table instead, increasing the sale by about 100x."',
-        "proposed_amount": 10,
-    }
-    task = dict_to_record(task_data, suffix="")
-    Dfx.call(CANISTER_NAME, "submit_task", f"{task}")
-    print("Task created.")
-
-    print("Showing all tasks")
-    tasks = Dfx.call(CANISTER_NAME, "list_tasks")
-    print_output(tasks)
-
 
 def create_and_build_canisters():
-    try:
-        Dfx.get_canister_id(CANISTER_NAME)
-    except ValueError:
-        # Create them.
-        Dfx.create_canister(CANISTER_NAME)
-        Dfx.build()
+    CandidExtractor.extract(CANISTER_NAME)
+    Dfx.create_canister(CANISTER_NAME)
+    Dfx.build()
 
 
 def setup_employees() -> list[str]:
@@ -104,9 +127,13 @@ def deploy_canister(alice, bob, chris):
 
 def _make_account_str(name: str, principal: str) -> str:
     return dict_to_record(
-        {"owner": f'principal "{principal}"', "reputation": EMPLOYEES[name]}
+        {
+            "owner": f'principal "{principal}"',
+            "health": EMPLOYEES[name][0],
+            "spirit": EMPLOYEES[name][1],
+        }
     )
 
 
 if __name__ == "__main__":
-    main()
+    dao_demo()

@@ -1,3 +1,5 @@
+// Inspired from https://github.com/dfinity/examples/tree/master/rust/basic_dao
+
 use crate::env::CanisterEnvironment;
 use crate::SERVICE;
 use crate::service::ChairmanDaoService;

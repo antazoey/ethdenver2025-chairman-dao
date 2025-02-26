@@ -1,3 +1,5 @@
+// Inspired from https://github.com/dfinity/examples/tree/master/rust/basic_dao
+
 mod env;
 mod init;
 mod service;
@@ -14,8 +16,8 @@ thread_local! {
 
 #[query]
 #[candid::candid_method(query)]
-fn account_balance() -> u64 {
-    SERVICE.with(|service| service.borrow().account_reputation())
+fn get_account() -> Account {
+    SERVICE.with(|service| service.borrow().get_account())
 }
 
 #[query]
@@ -48,9 +50,4 @@ fn list_proposals() -> Vec<Task> {
     SERVICE.with(|service| service.borrow().list_tasks())
 }
 
-candid::export_service!();
-
-#[ic_cdk_macros::query(name = "__get_candid_interface_tmp_hack")]
-fn export_candid() -> String {
-    __export_service()
-}
+ic_cdk::export_candid!();
