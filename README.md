@@ -9,8 +9,7 @@ You also need Python 3.13 to run the demo.
 
 Install the React FE via:
 
-```
-# install Node
+```# install Node
 npm create vite@4.1.0
 ```
 
@@ -18,8 +17,7 @@ npm create vite@4.1.0
 
 Launch the FE by doing:
 
-```
-cd web
+```cd web
 npm run dev
 ```
 

@@ -28,7 +28,7 @@ const AccordionColumns: React.FC = () => {
           <Col xs={12} key={index} className="mb-3">
             <Accordion defaultActiveKey="0">
               <Card>
-                <Accordion.Header as={Card.Header} eventKey="0">
+                <Accordion.Header as={Card.Header}>
                   {item.title}
                 </Accordion.Header>
                 <Accordion.Body>
