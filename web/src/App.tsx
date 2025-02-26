@@ -1,12 +1,12 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
+//import { useState } from 'react'
+//import reactLogo from './assets/react.svg'
 import './App.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import AccordionColumns from './components/AccordionColumns';
 import { Container, Row, Col } from 'react-bootstrap';
 
 function App() {
-  const [count, setCount] = useState(0)
+  //const [count, setCount] = useState(0)
 
   return (
     <div className="App">
@@ -19,12 +19,12 @@ function App() {
         </a>
       </div>
       <h1>Vite + React</h1> */}
-      <Container>
+      <Container id="tasks">
         <Row>
-          <Col xs={12} md={6}>
+          <Col xs={12} md={6} id="proposed-tasks">
             <AccordionColumns />
           </Col>
-          <Col xs={12} md={6}>
+          <Col xs={12} md={6} id="active-tasks">
             <AccordionColumns />
           </Col>
         </Row>
