@@ -1,5 +1,6 @@
+import shutil
 from contextlib import contextmanager
-from functools import wraps
+from pathlib import Path
 from subprocess import PIPE, run
 
 
@@ -17,18 +18,16 @@ class Dfx:
         return cls._run("canister", "id", name)
 
     @classmethod
-    def create_canisters(cls, name: str | None = None, all: bool = False):
+    def create_canister(cls, name: str):
         cmd = ["canister", "create"]
         if name:
             cmd.append(name)
-        if all:
-            cmd.append("--all")
 
         cls._run(*cmd)
 
     @classmethod
     def build(cls):
-        process = cls._run("build")
+        cls._run("build")
 
     @classmethod
     def get_identities(cls) -> list[str]:
@@ -109,3 +108,8 @@ def print_input(msg: str):
 
 def print_output(msg: str):
     print(f"Output: {msg}")
+
+
+def clean():
+    path = Path(__file__).parent / ".dfx"
+    shutil.rmtree(path, ignore_errors=True)
