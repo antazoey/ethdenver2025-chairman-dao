@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import './App.css'
+import 'bootstrap/dist/css/bootstrap.min.css';
+import AccordionColumns from './components/AccordionColumns';
 
 function App() {
   const [count, setCount] = useState(0)
@@ -16,6 +18,7 @@ function App() {
         </a>
       </div>
       <h1>Vite + React</h1>
+      <AccordionColumns />
       <div className="card">
         <button onClick={() => setCount((count) => count + 1)}>
           count is {count}
