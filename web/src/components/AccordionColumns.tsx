@@ -1,3 +1,4 @@
+import '../styles/AccordionColumns.css'
 import React from 'react';
 import { Accordion, Card, Col, Container, Row } from 'react-bootstrap';
 
@@ -26,15 +27,13 @@ const AccordionColumns: React.FC = () => {
       <Row>
         {accordionData.map((item, index) => (
           <Col xs={12} key={index} className="mb-3">
-            <Accordion defaultActiveKey="0">
-              <Card>
-                <Accordion.Header as={Card.Header}>
+            <Accordion defaultActiveKey="0" as={Card}>
+                <Accordion.Header>
                   {item.title}
                 </Accordion.Header>
                 <Accordion.Body>
-                  <Card.Body>{item.content}</Card.Body>
+                  {item.content}
                 </Accordion.Body>
-              </Card>
             </Accordion>
           </Col>
         ))}
