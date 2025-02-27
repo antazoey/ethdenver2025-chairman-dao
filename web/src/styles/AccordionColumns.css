@@ -11,18 +11,27 @@
     border-width: 1px;
 }
 
+.accordion-button:active, 
 .accordion-button:focus, 
 .accordion-button:hover,
 .accordion-button:not(.collapsed):hover {
     background-color: #f2f2f2;
 }
 
-.accordion-button:active, 
 .accordion-button:visited, 
-.accordion-button:not(.collapsed) {
+.accordion-button:not(.collapsed),
+.accordion-button.collapsed:visited {
     background-color: white;
+}
+
+.task:last-child {
+    padding-bottom: 2rem;
 }
 
 /* .accordion-button::after {
     display: none;
 } */
+
+.accordion-header:not(:has(+ .accordion-collapse)) .accordion-button::after {
+    display: none;
+}

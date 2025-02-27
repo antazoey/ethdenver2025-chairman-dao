@@ -1,6 +1,6 @@
 import '../styles/AccordionColumns.css'
 import React from 'react';
-import { Accordion, Col, Container, Row } from 'react-bootstrap';
+import { Accordion, Button, Col, Container, Row } from 'react-bootstrap';
 
 const AccordionColumns: React.FC = () => {
   const accordionData = [
@@ -10,7 +10,6 @@ const AccordionColumns: React.FC = () => {
     },
     {
       title: 'Accordion Item #2',
-      content: 'This is the content for the second accordion item.',
     },
     {
       title: 'Accordion Item #3',
@@ -26,14 +25,16 @@ const AccordionColumns: React.FC = () => {
     <Container>
       <Row>
         {accordionData.map((item, index) => (
-          <Col xs={12} key={index} className="mb-3">
+          <Col xs={12} key={index} className="task mb-3">
             <Accordion defaultActiveKey="0">
                 <Accordion.Header>
                   {item.title}
                 </Accordion.Header>
-                <Accordion.Body>
-                  {item.content}
-                </Accordion.Body>
+                {item.content && (
+                  <Accordion.Body>
+                    {item.content}
+                  </Accordion.Body>
+                )}
             </Accordion>
           </Col>
         ))}
