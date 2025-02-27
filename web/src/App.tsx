@@ -9,10 +9,12 @@ function App() {
     <div className="App">
       <Container id="tasks">
         <Row>
-          <Col xs={12} md={6} id="proposed-tasks">
+          <Col xs={12} md={6} id="proposed-tasks" className='taskColumn'>
+            <h2>Proposed Tasks</h2>
             <AccordionColumns />
           </Col>
-          <Col xs={12} md={6} id="active-tasks">
+          <Col xs={12} md={6} id="active-tasks" className='taskColumn'>
+          <h2>Ready Tasks</h2>
             <AccordionColumns />
           </Col>
         </Row>

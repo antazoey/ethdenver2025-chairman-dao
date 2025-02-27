@@ -1,6 +1,6 @@
 import '../styles/AccordionColumns.css'
 import React from 'react';
-import { Accordion, Card, Col, Container, Row } from 'react-bootstrap';
+import { Accordion, Col, Container, Row } from 'react-bootstrap';
 
 const AccordionColumns: React.FC = () => {
   const accordionData = [

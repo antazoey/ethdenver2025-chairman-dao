@@ -5,18 +5,24 @@
 }
 
 .accordion-button {
-    background-color: transparent;
-    padding: 2rem
+    background-color: white;
+    padding: 2rem;
+    border-radius: 4px;
+    border-width: 1px;
+}
+
+.accordion-button:focus, 
+.accordion-button:hover,
+.accordion-button:not(.collapsed):hover {
+    background-color: #f2f2f2;
 }
 
 .accordion-button:active, 
-.accordion-button:focus, 
-.accordion-button:hover, 
-.accordion-button:visited,
+.accordion-button:visited, 
 .accordion-button:not(.collapsed) {
-    background-color: transparent;
+    background-color: white;
 }
 
-.accordion-button::after {
+/* .accordion-button::after {
     display: none;
-}
+} */
