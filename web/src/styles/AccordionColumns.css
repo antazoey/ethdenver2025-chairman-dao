@@ -15,7 +15,7 @@
 .accordion-button:focus, 
 .accordion-button:hover,
 .accordion-button:not(.collapsed):hover {
-    background-color: #f2f2f2;
+    background-color: #E9F4F9;
 }
 
 .accordion-button:visited, 

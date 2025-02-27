@@ -15,7 +15,7 @@ function App() {
             <Container>
               <Row>
                 <Col xs={12} className="task mb-3">
-                  <button className="button-primary">Create Task</button>
+                  <button className="button-primary">Add Task</button>
                 </Col>
               </Row>
             </Container>
