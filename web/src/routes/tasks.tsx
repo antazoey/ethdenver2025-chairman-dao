@@ -2,6 +2,7 @@ import '../styles/ProgressBar.css';
 import AccordionColumns from '../components/AccordionColumns';
 import { Col, Container, Row, ProgressBar } from 'react-bootstrap';
 import React from 'react';
+import { chairman_dao } from "../declarations/chairman_dao";
 
 enum Valence {
   'None',
@@ -10,6 +11,9 @@ enum Valence {
 }
 
 const Tasks: React.FC = () => {
+  const accts = chairman_dao.list_tasks()
+  accts.then(console.log)
+
   const accordionData = [
     {
       title: 'Task Item #1',
@@ -61,7 +65,7 @@ const Tasks: React.FC = () => {
             </Col>
         </Row>
     </Container>
-  )
-}
+  );
+};
 
-export default Tasks
+export default Tasks;

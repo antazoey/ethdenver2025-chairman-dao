@@ -225,7 +225,6 @@ impl ChairmanDaoService {
     // After everyone has judged or the manager has proceeded the task, the task's points can be
     // awarded out.
     pub fn complete_task(&mut self, task_id: u64, do_close: bool) -> Result<(), String> {
-        self.require_employee()?;
         self.require_manager()?;
 
         let mut task = self.get_task(task_id)?;

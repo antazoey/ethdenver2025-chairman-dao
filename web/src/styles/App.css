@@ -11,7 +11,7 @@
 }
 
 .button-primary {
-  background-color: #F16044;
+  background-color: #f16044;
   color: #ffffff;
 }
 
@@ -24,6 +24,6 @@
   background-color: #ffeedb;
 }
 
-.tasks{
+.tasks {
   height: 100vh;
 }

@@ -9,12 +9,33 @@
         }
       },
       "type": "custom",
-      "wasm": "https://github.com/dfinity/internet-identity/releases/latest/download/internet_identity_dev.wasm.gz"
+      "wasm": "https://github.com/dfinity/internet-identity/releases/latest/download/internet_identity_dev.wasm.gz",
+      "declarations": {
+        "output": "web/src/declarations/internet_identity"
+      }
     },
+
     "chairman_dao": {
       "candid": "src/chairman_dao/src/chairman_dao.did",
       "type": "rust",
-      "package": "chairman_dao"
+      "package": "chairman_dao",
+      "declarations": {
+        "output": "web/src/declarations/chairman_dao"
+      }
+    },
+
+    "chairman_dao_frontend": {
+      "dependencies": ["chairman_dao"],
+      "type": "assets",
+      "source": ["web/dist/"]
     }
-  }
+
+  },
+  "defaults": {
+    "build": {
+      "packtool": "npm run --silent sources"
+    }
+  },
+  "output_env_file": ".env",
+  "version": 2
 }

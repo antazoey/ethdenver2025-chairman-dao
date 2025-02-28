@@ -1,14 +1,13 @@
 import './styles/App.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import React from 'react';
-import { Outlet, Link } from 'react-router-dom';
+import { Outlet } from 'react-router-dom';
 
 const App: React.FC = () => {
 
   return (
     <div className='App'>
       <Outlet />
-        
     </div>
   )
 }

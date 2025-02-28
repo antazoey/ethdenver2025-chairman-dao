@@ -8,6 +8,8 @@ TODO: Sam please fill this part out with a brief overview of the project.
 
 ## Install
 
+Ensure you have `dfx` installed by following [this guide](https://internetcomputer.org/docs/current/developer-docs/getting-started/install).
+
 Install Rust via:
 
 ```shell
@@ -16,7 +18,11 @@ rustup default stable
 rustup target add wasm32-unknown-unknown
 ```
 
-Ensure you have `dfx` installed by following [this guide](https://internetcomputer.org/docs/current/developer-docs/getting-started/install).
+Make sure NPM is installed and install the typescript project:
+
+```shell
+npm install
+```
 
 Install the React FE via:
 
@@ -25,7 +31,25 @@ Install the React FE via:
 npm create vite@4.1.0
 ```
 
-## React Frontend
+## Running the project
+
+First, setup the project:
+
+```shell
+npm run setup
+```
+
+Then, build it:
+
+```shell
+npm run build
+```
+
+Finally, launch the dev server:
+
+```shell
+npm start
+```
 
 Launch the FE by doing:
 
@@ -34,7 +58,7 @@ cd web
 npm run dev
 ```
 
-## ICP Backend
+## Backend
 
 The backend is powered by the [Internet Computer Protocol](https://internetcomputer.org/).
 If making changes, first see the [Contributing](#Developing) section.
@@ -86,6 +110,12 @@ Then, update the candid file:
 
 ```shell
 candid-extractor target/wasm32-unknown-unknown/release/chairman_dao.wasm > src/chairman_dao/src/chairman_dao.did
+```
+
+If needing to generate the declarations files for the frontend, run:
+
+```shell
+dfx generate
 ```
 
 ## Attribution

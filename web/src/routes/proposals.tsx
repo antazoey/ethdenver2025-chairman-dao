@@ -22,26 +22,26 @@ const Proposals: React.FC = () => {
   ];
 
   return (
-    <Container id='proposals' className='proposals'>
-        <Row>
-            <Col xs={12} md={6} id='proposed-tasks' className='taskColumn'>
-            <h2>Open Proposals</h2>
-            <AccordionColumns accordionData={accordionData}/>
-            <Container>
-                <Row>
-                <Col xs={12} className='task mb-3'>
-                    <button className='button-secondary'>Add Proposal</button>
-                </Col>
-                </Row>
-            </Container>
-            </Col>
-            <Col xs={12} md={6} id='active-tasks' className='taskColumn'>
-            <h2>Proposal History</h2>
-            <AccordionColumns accordionData={accordionData}/>
-            </Col>
-        </Row>
+    <Container id="proposals" className="proposals">
+      <Row>
+        <Col xs={12} md={6} id="proposed-tasks" className="taskColumn">
+          <h2>Open Proposals</h2>
+          <AccordionColumns accordionData={accordionData} />
+          <Container>
+            <Row>
+              <Col xs={12} className="task mb-3">
+                <button className="button-secondary">Add Proposal</button>
+              </Col>
+            </Row>
+          </Container>
+        </Col>
+        <Col xs={12} md={6} id="active-tasks" className="taskColumn">
+          <h2>Proposal History</h2>
+          <AccordionColumns accordionData={accordionData} />
+        </Col>
+      </Row>
     </Container>
-  )
-}
+  );
+};
 
-export default Proposals
+export default Proposals;

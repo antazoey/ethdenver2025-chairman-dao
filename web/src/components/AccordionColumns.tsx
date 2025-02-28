@@ -1,4 +1,4 @@
-import '../styles/AccordionColumns.css'
+import '../styles/AccordionColumns.css';
 import React from 'react';
 import { Accordion, Col, Container, Row } from 'react-bootstrap';
 
@@ -36,14 +36,8 @@ const AccordionColumns: React.FC<AccordionColumnsProps> = ({ accordionData, clas
         {accordionData.map((item, index) => (
           <Col xs={12} key={index} className={ classPrefix + ' mb-3 ' + getStyleNameFromValence(item.valence as Valence)}>
             <Accordion defaultActiveKey="0">
-              <Accordion.Header>
-                {item.title}
-              </Accordion.Header>
-              {item.content && (
-                <Accordion.Body>
-                  {item.content}
-                </Accordion.Body>
-              )}
+              <Accordion.Header>{item.title}</Accordion.Header>
+              {item.content && <Accordion.Body>{item.content}</Accordion.Body>}
             </Accordion>
           </Col>
         ))}
