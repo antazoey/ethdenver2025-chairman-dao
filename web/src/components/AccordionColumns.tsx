@@ -25,8 +25,8 @@ const AccordionColumns: React.FC = () => {
     <Container>
       <Row>
         {accordionData.map((item, index) => (
-          <Col xs={12} key={index} className="task mb-3">
-            <Accordion defaultActiveKey="0">
+          <Col xs={12} key={index} className='task mb-3'>
+            <Accordion defaultActiveKey='0'>
                 <Accordion.Header>
                   {item.title}
                 </Accordion.Header>

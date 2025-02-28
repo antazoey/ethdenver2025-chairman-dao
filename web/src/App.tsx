@@ -6,7 +6,7 @@ import { Outlet, Link } from 'react-router-dom';
 const App: React.FC = () => {
 
   return (
-    <div className="App">
+    <div className='App'>
       <Outlet />
         
     </div>
