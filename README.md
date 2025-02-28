@@ -1,4 +1,4 @@
-# ETH Denver 2025 ChairmanDAO Project
+# ETH Denver 2025 Chairman DAO Project
 
 Brought to you by the Snek-oil Shillers.
 
@@ -8,8 +8,15 @@ TODO: Sam please fill this part out with a brief overview of the project.
 
 ## Install
 
+Install Rust via:
+
+```shell
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+rustup default stable
+rustup target add wasm32-unknown-unknown
+```
+
 Ensure you have `dfx` installed by following [this guide](https://internetcomputer.org/docs/current/developer-docs/getting-started/install).
-You also need Python 3.13 to run the demo.
 
 Install the React FE via:
 
