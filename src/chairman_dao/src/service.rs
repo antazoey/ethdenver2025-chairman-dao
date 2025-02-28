@@ -65,8 +65,8 @@ impl ChairmanDaoService {
     // TODO: Implement an actual flow for adding accounts in an authorized way.
     //  (perhaps via manager or corporate consensus). Right now, this method is
     //  un-authed for the sake of demo-ing and development.
-    pub fn add_account(&mut self, caller: Principal, account: Account) {
-        self.accounts.insert(caller, account);
+    pub fn add_account(&mut self, account: Account) {
+        self.accounts.insert(account.owner, account);
     }
 
     // Get the employee with the most voting power.
