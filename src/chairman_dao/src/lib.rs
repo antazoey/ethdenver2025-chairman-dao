@@ -29,7 +29,7 @@ fn list_accounts() -> Vec<Account> {
 }
 
 #[update]
-#[candid::candid_method(query)]
+#[candid::candid_method]
 fn add_account(principal: Principal, account: Account) {
     SERVICE.with(|service| service.borrow_mut().add_account(principal, account))
 }

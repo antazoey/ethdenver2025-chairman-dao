@@ -9,7 +9,6 @@ TODO: Sam please fill this part out with a brief overview of the project.
 ## Install
 
 Ensure you have `dfx` installed by following [this guide](https://internetcomputer.org/docs/current/developer-docs/getting-started/install).
-You also need Python 3.13 to run the demo.
 
 Install the React FE via:
 
