@@ -39,7 +39,7 @@ type TaskState = variant { Open; Closed; Pending };
 type VotingPower = record { spirit : nat64; health : nat64 };
 service : (ChairmanDaoStableStorage) -> {
   accept_proposal : (nat64, opt text, opt text, opt text) -> (Result);
-  add_account : (principal, Account) -> () query;
+  add_account : (principal, Account) -> ();
   add_task_note : (nat64, text) -> (Result);
   claim_task : (nat64) -> (Result);
   complete_task : (nat64, bool) -> (Result);
