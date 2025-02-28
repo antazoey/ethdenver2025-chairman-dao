@@ -62,8 +62,11 @@ impl ChairmanDaoService {
             .collect()
     }
 
-    pub fn add_account(&mut self, caller: Principal, account: Account) {
-        self.accounts.insert(caller, account);
+    // TODO: Implement an actual flow for adding accounts in an authorized way.
+    //  (perhaps via manager or corporate consensus). Right now, this method is
+    //  un-authed for the sake of demo-ing and development.
+    pub fn add_account(&mut self, account: Account) {
+        self.accounts.insert(account.owner, account);
     }
 
     // Get the employee with the most voting power.
@@ -96,6 +99,7 @@ impl ChairmanDaoService {
         description: String,
         rating: VotingPower,
     ) -> Result<u64, String> {
+        self.require_employee()?;
         let task_id = self.tasks.len() as u64;
         let task = Task {
             id: task_id,
@@ -116,6 +120,7 @@ impl ChairmanDaoService {
 
     // Add a note to task arguing a claim (or anything else).
     pub fn add_take_note(&mut self, task_id: u64, note: String) -> Result<(), String> {
+        self.require_employee()?;
         let mut task = self.get_task(task_id)?;
         let note = TaskNote {
             author: ic_cdk::caller(),
@@ -127,6 +132,7 @@ impl ChairmanDaoService {
 
     // Each employee rates in their opinion what the task's voting power is worth.
     pub fn rate_task(&mut self, task_id: u64, voting_power: VotingPower) -> Result<(), String> {
+        self.require_employee()?;
         let mut task = self.get_task(task_id)?;
 
         if task.state != TaskState::Pending {
@@ -146,6 +152,7 @@ impl ChairmanDaoService {
 
     // Useful for when not everyone has voted; allows manager to still proceed.
     pub fn open_task(&mut self, task_id: u64) -> Result<(), String> {
+        self.require_employee()?;
         self.require_manager()?;
         let task = self.get_task(task_id)?;
 
@@ -167,6 +174,7 @@ impl ChairmanDaoService {
     // Add yourself to the claimers vector to potentially get some of the claim during completion
     // (after everyone has voted).
     pub fn claim_task(&mut self, task_id: u64) -> Result<(), String> {
+        self.require_employee()?;
         let mut task = self.get_task(task_id)?;
 
         if task.state != TaskState::Open {
@@ -188,6 +196,7 @@ impl ChairmanDaoService {
         claim_id: u64,
         percentage: f64,
     ) -> Result<(), String> {
+        self.require_employee()?;
         let mut task = self.get_task(task_id)?;
 
         if task.state != TaskState::Open {
@@ -216,6 +225,7 @@ impl ChairmanDaoService {
     // After everyone has judged or the manager has proceeded the task, the task's points can be
     // awarded out.
     pub fn complete_task(&mut self, task_id: u64, do_close: bool) -> Result<(), String> {
+        self.require_employee()?;
         self.require_manager()?;
 
         let mut task = self.get_task(task_id)?;
@@ -281,6 +291,7 @@ impl ChairmanDaoService {
         notes: String,
         health_only: bool,
     ) -> Result<u64, String> {
+        self.require_employee()?;
         let proposal_id = self.proposals.len() as u64;
         let proposal = Proposal {
             id: proposal_id,
@@ -304,6 +315,7 @@ impl ChairmanDaoService {
         new_description: Option<String>,
         completion_notes: Option<String>,
     ) -> Result<(), String> {
+        self.require_employee()?;
         let mut proposal = self.get_proposal(proposal_id)?;
         proposal.new_title = new_title;
         proposal.new_description = new_description;
@@ -317,6 +329,7 @@ impl ChairmanDaoService {
         proposal_id: u64,
         completion_notes: Option<String>,
     ) -> Result<(), String> {
+        self.require_employee()?;
         let mut proposal = self.get_proposal(proposal_id)?;
         proposal.completion_notes = completion_notes;
         proposal.state = ProposalState::Rejected;
@@ -325,11 +338,19 @@ impl ChairmanDaoService {
 
     // ** Private helpers **
 
+    fn require_employee(&self) -> Result<(), String> {
+        if !self.accounts.contains_key(&ic_cdk::caller()) {
+            return Err(String::from("Not authorized: not a registered account"));
+        }
+
+        Ok(())
+    }
+
     fn require_manager(&self) -> Result<(), String> {
         let manager = self.get_manager().unwrap();
 
         if ic_cdk::caller() != manager.owner {
-            return Err(String::from("Manager required to perform this action"));
+            return Err(String::from("Not authorized: must have 'manager' status"));
         }
 
         Ok(())
