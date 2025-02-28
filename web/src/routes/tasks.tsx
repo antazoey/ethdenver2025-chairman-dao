@@ -1,5 +1,5 @@
 import AccordionColumns from '../components/AccordionColumns';
-import { Container, Row, Col } from 'react-bootstrap';
+import { Col, Container, Row, ProgressBar } from 'react-bootstrap';
 import React from 'react';
 
 const Tasks: React.FC = () => {
@@ -28,11 +28,16 @@ const Tasks: React.FC = () => {
             <h2>Proposed Tasks</h2>
             <AccordionColumns accordionData={accordionData}/>
             <Container>
-                <Row>
+              <Row>
                 <Col xs={12} className='task mb-3'>
-                    <button className='button-primary'>Add Task</button>
+                    <ProgressBar now={60} label={`60%`} />
                 </Col>
-                </Row>
+              </Row>
+              <Row>
+              <Col xs={12} className='task mb-3'>
+                  <button className='button-primary'>Add Task</button>
+              </Col>
+              </Row>
             </Container>
             </Col>
             <Col xs={12} md={6} id='active-tasks' className='taskColumn'>
