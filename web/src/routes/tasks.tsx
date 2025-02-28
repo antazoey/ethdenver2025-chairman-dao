@@ -3,11 +3,18 @@ import AccordionColumns from '../components/AccordionColumns';
 import { Col, Container, Row, ProgressBar } from 'react-bootstrap';
 import React from 'react';
 
+enum Valence {
+  'None',
+  'Heart',
+  'Spirit',
+}
+
 const Tasks: React.FC = () => {
   const accordionData = [
     {
       title: 'Task Item #1',
       content: 'This is the content for the first accordion item.',
+      valence: Valence.None
     },
     {
       title: 'Accordion Item #2',
@@ -15,10 +22,12 @@ const Tasks: React.FC = () => {
     {
       title: 'Accordion Item #3',
       content: 'This is the content for the third accordion item.',
+      valence: Valence.Heart
     },
     {
       title: 'Accordion Item #4',
       content: 'This is the content for the fourth accordion item.',
+      valence: Valence.Spirit
     },
   ];
 
@@ -27,7 +36,7 @@ const Tasks: React.FC = () => {
         <Row>
             <Col xs={12} md={6} id='proposed-tasks' className='taskColumn'>
             <h2>Proposed Tasks</h2>
-            <AccordionColumns accordionData={accordionData}/>
+            <AccordionColumns accordionData={accordionData} classPrefix='task'/>
             <Container>
               <Row>
                 <Col xs={12} className='task mb-3'>
@@ -48,7 +57,7 @@ const Tasks: React.FC = () => {
             </Col>
             <Col xs={12} md={6} id='active-tasks' className='taskColumn'>
             <h2>Ready Tasks</h2>
-            <AccordionColumns accordionData={accordionData}/>
+            <AccordionColumns accordionData={accordionData} classPrefix='task'/>
             </Col>
         </Row>
     </Container>
