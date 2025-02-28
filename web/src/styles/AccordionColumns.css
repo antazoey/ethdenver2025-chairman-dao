@@ -28,10 +28,6 @@
     padding-bottom: 2rem;
 }
 
-/* .accordion-button::after {
-    display: none;
-} */
-
 .accordion-header:not(:has(+ .accordion-collapse)) .accordion-button::after {
     display: none;
 }
