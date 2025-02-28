@@ -1,0 +1,15 @@
+.progress-bar.bg-health {
+    background-color: #F16044;
+}
+
+.progress-bar.bg-spirit {
+    background-color: #06bee1;
+}
+
+.progress-bar.progress-bar-striped.bg-health {
+    background-color: rgba(241, 96, 68, .5);
+}
+
+.progress-bar.progress-bar-striped.bg-spirit {
+    background-color: rgba(6, 190, 225, .5);
+}

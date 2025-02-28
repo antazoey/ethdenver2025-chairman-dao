@@ -1,3 +1,4 @@
+import '../styles/ProgressBar.css';
 import AccordionColumns from '../components/AccordionColumns';
 import { Col, Container, Row, ProgressBar } from 'react-bootstrap';
 import React from 'react';
@@ -30,7 +31,12 @@ const Tasks: React.FC = () => {
             <Container>
               <Row>
                 <Col xs={12} className='task mb-3'>
-                    <ProgressBar now={60} label={`60%`} />
+                    <ProgressBar>
+                      <ProgressBar variant="health" now={10} key={1} />
+                      <ProgressBar striped variant="health" now={35} key={2} />
+                      <ProgressBar striped variant="spirit" now={20} key={3} />
+                      <ProgressBar variant="spirit" now={10} key={4} />
+                    </ProgressBar>
                 </Col>
               </Row>
               <Row>
