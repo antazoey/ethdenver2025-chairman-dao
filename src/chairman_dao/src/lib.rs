@@ -110,7 +110,7 @@ fn list_proposals() -> Vec<Proposal> {
 
 #[update]
 #[candid::candid_method]
-fn submit_propsoal(
+fn submit_proposal(
     title: String,
     description: String,
     notes: String,
@@ -150,3 +150,5 @@ fn reject_proposal(proposal_id: u64, completion_notes: Option<String>) -> Result
             .reject_proposal(proposal_id, completion_notes)
     })
 }
+
+ic_cdk::export_candid!();

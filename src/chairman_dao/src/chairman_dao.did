@@ -22,6 +22,8 @@ type Proposal = record {
   health_only : bool;
 };
 type ProposalState = variant { Open; Rejected; Accepted };
+type Result = variant { Ok; Err : text };
+type Result_1 = variant { Ok : nat64; Err : text };
 type Task = record {
   id : nat64;
   claims : vec Claim;
@@ -35,4 +37,22 @@ type Task = record {
 type TaskNote = record { note : text; author : principal };
 type TaskState = variant { Open; Closed; Pending };
 type VotingPower = record { spirit : nat64; health : nat64 };
-service : (ChairmanDaoStableStorage) -> {}
+service : (ChairmanDaoStableStorage) -> {
+  accept_proposal : (nat64, opt text, opt text, opt text) -> (Result);
+  add_account : (principal, Account) -> () query;
+  add_task_note : (nat64, text) -> (Result);
+  claim_task : (nat64) -> (Result);
+  complete_task : (nat64, bool) -> (Result);
+  get_account : (opt principal) -> (Account) query;
+  get_proposal : (nat64) -> (Proposal) query;
+  get_task : (nat64) -> (Task) query;
+  judge_claimant : (nat64, nat64, float64) -> (Result);
+  list_accounts : () -> (vec Account) query;
+  list_proposals : () -> (vec Proposal) query;
+  list_tasks : () -> (vec Task) query;
+  open_task : (nat64) -> (Result);
+  rate_task : (nat64, VotingPower) -> (Result);
+  reject_proposal : (nat64, opt text) -> (Result);
+  submit_proposal : (text, text, text, bool) -> (Result_1);
+  submit_task : (text, text, VotingPower) -> (Result_1);
+}

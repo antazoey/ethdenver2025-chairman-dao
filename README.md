@@ -13,7 +13,8 @@ You also need Python 3.13 to run the demo.
 
 Install the React FE via:
 
-```# install Node
+```shell
+# install Node
 npm create vite@4.1.0
 ```
 
@@ -21,110 +22,63 @@ npm create vite@4.1.0
 
 Launch the FE by doing:
 
-```cd web
+```shell
+cd web
 npm run dev
 ```
 
 ## ICP Backend
 
-To start the ICP local testnet, build the service, create the canister and the users (or ensure they are created, and
-deploy the canister, run the `setup` command:
+The backend is powered by the [Internet Computer Protocol](https://internetcomputer.org/).
+If making changes, first see the [Contributing](#Developing) section.
 
-```python
-python demo.py setup
+First, start the local developer replica:
+
+```shell
+dfx start --background
 ```
 
-It should display the output of what it is doing:
+Next, generate the canister ID:
 
-```
-Input: dfx start --background
-Running dfx start for version 0.25.0
-Using the default configuration for the local shared network.
-Replica API running in the background on 127.0.0.1:4943
-Input: dfx canister create chairman_dao
-Input: dfx build
-Input: dfx identity list
-Input: dfx identity get-principal --identity Alice
-Input: dfx identity get-principal --identity Bob
-Input: dfx identity get-principal --identity Chris
-Input: dfx deploy chairman_dao --yes --argument (record { accounts = vec { record { owner = principal "cjckl-hz5jj-at2o5-6lvu4-fd7cc-6uctc-77rgg-4nxka-bri4e-gldl3-sqe"; health = 20; spirit = 10;  }; record { owner = principal "63eu6-sjaew-k236w-c4jez-pvubc-c6kcx-wj6p3-xfwob-b2rj4-snhpf-dqe"; health = 10; spirit = 0;  }; record { owner = principal "d3ez4-mahrj-4bnvh-ncwvu-lljbt-4khrw-ukiiy-clneo-thzxu-2fgr2-tae"; health = 0; spirit = 5;  }; }; tasks = vec {}; })
+```shell
+dfx canister create chairman_dao
 ```
 
-To see that it is working, do:
+Now we can build the canister (if you haven't already!):
 
-```
-python demo.py list-accounts
-```
-
-It should display:
-
-```
-Input: dfx canister call chairman_dao list_accounts ()
-Output: (
-  vec {
-    record {
-      owner = principal "cjckl-hz5jj-at2o5-6lvu4-fd7cc-6uctc-77rgg-4nxka-bri4e-gldl3-sqe";
-      spirit = 10 : nat64;
-      health = 20 : nat64;
-    };
-    record {
-      owner = principal "63eu6-sjaew-k236w-c4jez-pvubc-c6kcx-wj6p3-xfwob-b2rj4-snhpf-dqe";
-      spirit = 0 : nat64;
-      health = 10 : nat64;
-    };
-    record {
-      owner = principal "d3ez4-mahrj-4bnvh-ncwvu-lljbt-4khrw-ukiiy-clneo-thzxu-2fgr2-tae";
-      spirit = 5 : nat64;
-      health = 0 : nat64;
-    };
-  },
-)
+```shell
+cargo build --release --target wasm32-unknown-unknown --package chairman_dao
 ```
 
-Create the example task by doing:
+The above three steps are also available in the `setup.sh` script in the root of the project.
 
-```
-python demo.py create-task
-```
+To deploy the canister as your backend, run the `deploy` command:
 
-It should show:
-
-```
-Input: dfx canister call chairman_dao submit_task (record { name = "Upsold VIP table"; description = "A customer wanted a drink but I sold them a VIP table instead, increasing the sale by about 100x."; proposed_amount = 10;  })
-Task created.
+```shell
+dfx deploy
 ```
 
-To list all tasks, do:
-
-```
-python demo.py list-tasks
-```
-
-It should show:
-
-```
-Showing all tasks
-Input: dfx canister call chairman_dao list_tasks ()
-Output: (
-  vec {
-    record {
-      id = 0 : nat64;
-      creator = principal "63eu6-sjaew-k236w-c4jez-pvubc-c6kcx-wj6p3-xfwob-b2rj4-snhpf-dqe";
-      info = record {
-        name = "Upsold VIP table";
-        description = "A customer wanted a drink but I sold them a VIP table instead, increasing the sale by about 100x.";
-        proposed_amount = 10 : nat64;
-      };
-      state = variant { Open };
-    };
-  },
-)
-```
+And fill out the details for your `ChairmanDao` instance.
+It should also launch an instance URL for you to call methods on the instance from the browser.
 
 To teardown the network, run:
 
 ```
 dfx stop
+```
+
+### Developing
+
+First, build the service:
+
+```shell
+cargo build --release --target wasm32-unknown-unknown --package chairman_dao
+```
+
+Then, update the candid file:
+
+```shell
+candid-extractor target/wasm32-unknown-unknown/release/chairman_dao.wasm > src/chairman_dao/src/chairman_dao.did
 ```
 
 ## Attribution

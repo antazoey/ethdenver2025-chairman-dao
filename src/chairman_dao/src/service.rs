@@ -357,5 +357,3 @@ impl ChairmanDaoService {
         Ok(())
     }
 }
-
-ic_cdk::export_candid!();
