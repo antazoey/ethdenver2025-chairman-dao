@@ -21,10 +21,10 @@ interface AccordionColumnsProps {
   classPrefix?: string;
 }
 
-function getStyleNameFromValence(valence:Valence) {
+function getStyleNameFromValence(valence: Valence) {
   if (valence) {
-    if (valence == Valence.Health){ return 'primarily-health'}
-    else if (valence == Valence.Spirit) { return 'primarily-spirit'}
+    if (valence == Valence.Health) { return 'primarily-health' }
+    else if (valence == Valence.Spirit) { return 'primarily-spirit' }
   }
   return ''
 }
@@ -34,9 +34,13 @@ const AccordionColumns: React.FC<AccordionColumnsProps> = ({ accordionData, clas
     <Container>
       <Row>
         {accordionData.map((item, index) => (
-          <Col xs={12} key={index} className={ classPrefix + ' mb-3 ' + getStyleNameFromValence(item.valence as Valence)}>
+          <Col xs={12} key={index} className={classPrefix + ' mb-3 ' + getStyleNameFromValence(item.valence as Valence)}>
             <Accordion defaultActiveKey="0">
-              <Accordion.Header>{item.title}</Accordion.Header>
+              <Accordion.Header>
+                {<img src="../assets/heart-icon.png" alt="" className="me-2" style={{ width: '24px', height: '24px' }} />}
+                {<img src="../assets/spirit-icon.png" alt="" className="me-2" style={{ width: '24px', height: '24px' }} />}
+                {item.title}
+              </Accordion.Header>
               {item.content && <Accordion.Body>{item.content}</Accordion.Body>}
             </Accordion>
           </Col>

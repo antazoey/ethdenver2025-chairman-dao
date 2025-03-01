@@ -54,6 +54,7 @@ const Tasks: React.FC = () => {
                     title: task.title || "Unnamed Task",
                     content: task.description || "No description available"
                   }))}
+                classPrefix={'task'}
               />
               <Container>
               <Row>
@@ -68,7 +69,7 @@ const Tasks: React.FC = () => {
               </Row>
               <Row>
               <Col xs={12} className='task mb-3'>
-                  <Button className='button-primary' onClick={handleShowModal}>Add Task</Button>
+                  <Button onClick={handleShowModal}>Add Task</Button>
               </Col>
               </Row>
             </Container>
@@ -89,17 +90,17 @@ const Tasks: React.FC = () => {
         {/* Modal for creating a new task */}
         <Modal show={showModal} onHide={handleCloseModal}>
           <Modal.Header closeButton>
-            <Modal.Title>Create New Task</Modal.Title>
+            <Modal.Title>Add Task</Modal.Title>
           </Modal.Header>
           <Modal.Body>
             <CreateTaskForm handleTitleSet={setNewTaskTitle} handleDescriptionSet={setNewTaskDescription} />
           </Modal.Body>
           <Modal.Footer>
             <Button variant="secondary" onClick={handleCloseModal}>
-              Close
+              Cancel
             </Button>
             <Button variant="primary" onClick={handleSubmitTask}>
-              Save Changes
+              Add
             </Button>
           </Modal.Footer>
         </Modal>
