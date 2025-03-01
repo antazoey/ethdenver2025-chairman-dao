@@ -54,7 +54,7 @@ const Tasks: React.FC = () => {
               .map(task => ({
                 title: task.title,
                 content: task.description,
-                overlayWidth: divideAndDisplayAsPercentage(task.ratings.length, 3),
+                overlayWidth: divideAndDisplayAsPercentage(task.ratings.length, 4),
                 health: Number(task.estimated_health),
                 spirit: Number(task.estimated_spirit),
               }))}
