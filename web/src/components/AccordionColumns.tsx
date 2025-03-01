@@ -43,7 +43,7 @@ const AccordionColumns: React.FC<AccordionColumnsProps> = ({ accordionData, clas
       <Row>
         {accordionData.map((item, index) => (
           <Col xs={12} key={index} className={classPrefix + ' mb-3 ' + getStyleNameFromValence(item.valence as Valence)}>
-            <Accordion defaultActiveKey="0" className={item.alreadyVoted ? 'voted-already' : ''}>
+            <Accordion defaultActiveKey="0" className={item.canVote ? '' : 'voted-already'}>
               <Accordion.Header
                 className="accordion-header-overlay"
                 style={{ '--overlay-width': item.overlayWidth || '0%' } as React.CSSProperties}
