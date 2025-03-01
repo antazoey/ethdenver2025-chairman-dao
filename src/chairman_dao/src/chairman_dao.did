@@ -28,10 +28,12 @@ type Task = record {
   id : nat64;
   claims : vec Claim;
   title : text;
+  estimate_health : nat64;
   ratings : vec record { principal; VotingPower };
   description : text;
   state : TaskState;
   notes : vec TaskNote;
+  estimate_spirit : nat64;
   voting_power : VotingPower;
 };
 type TaskNote = record { note : text; author : principal };
