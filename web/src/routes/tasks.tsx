@@ -16,6 +16,9 @@ const Tasks: React.FC = () => {
   const [tasks, setTasks] = useState<any[]>([]); // Store fetched tasks
   const [showModal, setShowModal] = useState(false); // State for modal visibility
 
+  const [newTaskTitle, setNewTaskTitle] = useState<string>();
+  const [newTaskDescription, setNewTaskDescription] = useState<string>();
+
   useEffect(() => {
     async function fetchTasks() {
       try {
@@ -31,6 +34,13 @@ const Tasks: React.FC = () => {
 
   const handleShowModal = () => setShowModal(true);
   const handleCloseModal = () => setShowModal(false);
+
+  const handleSubmitTask = () => {
+    let voting_power = {health: 0, spirit: 0}
+    console.log(`New task title ${newTaskTitle}, descriptions: ${newTaskDescription}`);
+    chairman_dao.submit_task(newTaskTitle, newTaskDescription, voting_power).then(console.log)
+    setShowModal(false);
+  }
 
   return (
     <Container id='tasks' className='tasks'>
@@ -82,13 +92,13 @@ const Tasks: React.FC = () => {
             <Modal.Title>Create New Task</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <CreateTaskForm />
+            <CreateTaskForm handleTitleSet={setNewTaskTitle} handleDescriptionSet={setNewTaskDescription} />
           </Modal.Body>
           <Modal.Footer>
             <Button variant="secondary" onClick={handleCloseModal}>
               Close
             </Button>
-            <Button variant="primary" onClick={handleCloseModal}>
+            <Button variant="primary" onClick={handleSubmitTask}>
               Save Changes
             </Button>
           </Modal.Footer>
