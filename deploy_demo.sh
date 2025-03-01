@@ -16,10 +16,11 @@ ARGUMENTS="(record { \
     tasks = vec {\
       record { id = 0; title = \"Storms Abrewin' Folk Night\"; description = \"I upsold a few tickets to an upcoming show in the coffee shop, increasing revenue.\"; state = variant { Pending }; voting_power = record { health = 10; spirit = 0 }; claims = vec {}; notes = vec {}; ratings = vec {\
         record { principal \"${ALICE}\"; record { health = 8; spirit = 4 } }; \
+        record { principal \"${BOB}\"; record { health = 6; spirit = 3 } }; \
       }; estimated_health = 8; estimated_spirit = 4 }; \
-      record { id = 1; title = \"New TikTok marketing videos\"; description = \"Over the weekend, I made TikToks about our brand.\"; state = variant { Pending }; voting_power = record { health = 0; spirit = 0 }; claims = vec {}; notes = vec {}; ratings = vec {}; estimated_health = 8; estimated_spirit = 4  }; \
+      record { id = 1; title = \"New TikTok marketing videos\"; description = \"Over the weekend, I made TikToks about our brand.\"; state = variant { Pending }; voting_power = record { health = 0; spirit = 0 }; claims = vec {}; notes = vec {}; ratings = vec {}; estimated_health = 4; estimated_spirit = 1  }; \
       record { id = 2; title = \"Handled large electronic-order sale\"; description = \"I helped our largest customer supply coffee to ETHDenver.\"; state = variant { Pending }; voting_power = record { health = 0; spirit = 0 }; claims = vec {}; notes = vec {}; ratings = vec {}; estimated_health = 8; estimated_spirit = 4  }; \
-      record { id = 3; title = \"Fixed the water heater\"; description = \"We have hot water again!\"; state = variant { Open }; voting_power = record { health = 10; spirit = 0 }; claims = vec {}; notes = vec {}; ratings = vec {}; estimated_health = 8; estimated_spirit = 4  }; \
+      record { id = 3; title = \"Fixed the water heater\"; description = \"We have hot water again!\"; state = variant { Open }; voting_power = record { health = 10; spirit = 0 }; claims = vec {}; notes = vec {}; ratings = vec {}; estimated_health = 5; estimated_spirit = 2  }; \
       record { id = 4; title = \"Singing happy birthday\"; description = \"Anyone who sang happy birthday this week should claim this task\"; state = variant { Open }; voting_power = record { health = 0; spirit = 0 }; claims = vec {}; notes = vec {}; ratings = vec {}; estimated_health = 8; estimated_spirit = 4  }; \
       record { id = 5; title = \"Game night\"; description = \"This task is for those who contributed to game night\"; state = variant { Open }; voting_power = record { health = 0; spirit = 0 }; claims = vec {}; notes = vec {}; ratings = vec {}; estimated_health = 2; estimated_spirit = 6  }; \
     }; \

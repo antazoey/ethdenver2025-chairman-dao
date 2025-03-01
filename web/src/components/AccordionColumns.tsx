@@ -45,10 +45,10 @@ const AccordionColumns: React.FC<AccordionColumnsProps> = ({ accordionData, clas
               >
                 <Container>
                   <Row>
-                    <Col md="8">
+                    <Col md="9">
                       {item.title}
                     </Col>
-                    <Col md="4">
+                    <Col md="3">
                       <div className="icon-stack">
                         <div>{item.health}<img src="../assets/heart-icon.png" alt="" style={{ width: '24px', height: '24px' }} /></div>
                         <div>{item.spirit}<img src="../assets/spirit-icon.png" alt="" style={{ width: '24px', height: '24px' }} /></div>

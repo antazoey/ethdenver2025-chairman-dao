@@ -48,8 +48,8 @@ const Tasks: React.FC = () => {
                 title: task.title,
                 content: task.description,
                 overlayWidth: divideAndDisplayAsPercentage(task.ratings.length, 3),
-                health: task.estimated_health || undefined,
-                spirit: task.estimated_spirit || undefined,
+                health: Number(task.estimated_health),
+                spirit: Number(task.estimated_spirit),
               }))}
             classPrefix={'task'}
           />
@@ -57,7 +57,7 @@ const Tasks: React.FC = () => {
             <Row>
               <Col xs={12} className='task mb-3'>
                 <ProgressBar>
-                  <ProgressBar variant="health" now={10} key={1} />
+                  <ProgressBar variant="health" now={40} key={1} />
                   <ProgressBar striped variant="health" now={35} key={2} />
                   <ProgressBar striped variant="spirit" now={20} key={3} />
                   <ProgressBar variant="spirit" now={10} key={4} />
@@ -77,8 +77,8 @@ const Tasks: React.FC = () => {
             accordionData={tasks
               .filter(task => task.state.Open === null) // Filter only "Open" tasks
               .map(task => ({
-                title: task.title || "Unnamed Task",
-                content: task.description || "No description available"
+                title: task.title,
+                content: task.description
               }))}
           />
         </Col>
