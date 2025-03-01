@@ -49,9 +49,9 @@ const Proposals: React.FC = () => {
             proposals.filter(proposal => proposal.state.Open === null)
             .map(proposal => ({
               id: proposal.id,
-            title: proposal.title || "Unnamed Task", // Adjust based on actual structure
-            content: proposal.description || "No description available"
-          }))}/>
+              title: proposal.title,
+              content: proposal.description,
+            }))}/>
           <Container>
             <Row>
               <Col xs={12} className="task mb-9">
@@ -71,9 +71,10 @@ const Proposals: React.FC = () => {
             proposals.filter(proposal => proposal.state.Open === undefined)
             .map(proposal => ({
               id: proposal.id,
-            title: proposal.title || "Unnamed Task", // Adjust based on actual structure
-            content: proposal.description || "No description available"
-          }))}/>
+              title: proposal.title,
+              content: proposal.description,
+              showBar: false,
+            }))}/>
         </Col>
       </Row>
     </Container>

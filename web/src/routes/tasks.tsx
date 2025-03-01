@@ -89,7 +89,8 @@ const Tasks: React.FC = () => {
                 overlayWidth: divideAndDisplayAsPercentage(task.ratings.length, 4),
                 health: Number(task.estimated_health),
                 spirit: Number(task.estimated_spirit),
-                alreadyVoted: task.ratings.some(([principal]) => principal === 'principal')
+                alreadyVoted: task.ratings.some(([principal]) => principal === 'principal'),
+                showBar: false,
               }))}
             classPrefix={'task'}
             onClick={handleRateTaskClick}
@@ -123,7 +124,8 @@ const Tasks: React.FC = () => {
                 content: task.description,
                 health: Number(task.estimated_health),
                 spirit: Number(task.estimated_spirit),
-                valence: Number(task.estimated_health) > Number(task.estimated_spirit) ? Valence.Health : Valence.Spirit
+                valence: Number(task.estimated_health) > Number(task.estimated_spirit) ? Valence.Health : Valence.Spirit,
+                showBar: false,
               }))}
             classPrefix={'task'}
             onClick={handleShowJudgeModal}
