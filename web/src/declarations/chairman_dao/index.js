@@ -4,6 +4,14 @@ import { Actor, HttpAgent } from "@dfinity/agent";
 import { idlFactory } from "./chairman_dao.did.js";
 export { idlFactory } from "./chairman_dao.did.js";
 
+
+const process = {
+  env: {
+    CANISTER_ID_CHAIRMAN_DAO: "bkyz2-fmaaa-aaaaa-qaaaq-cai",
+    DFX_NETWORK: "local",
+  }
+}
+
 /* CANISTER_ID is replaced by webpack based on node environment
  * Note: canister environment variable will be standardized as
  * process.env.CANISTER_ID_<CANISTER_NAME_UPPERCASE>

@@ -1,32 +1,34 @@
 import AccordionColumns from '../components/AccordionColumns';
 import { Container, Row, Col } from 'react-bootstrap';
-import React from 'react';
+import React, {useEffect, useState} from 'react';
+import {chairman_dao} from "../declarations/chairman_dao";
 
 const Proposals: React.FC = () => {
-  const accordionData = [
-    {
-      title: 'Proposal Item #1',
-      content: 'This is the content for the first accordion item.',
-    },
-    {
-      title: 'Accordion Item #2',
-    },
-    {
-      title: 'Accordion Item #3',
-      content: 'This is the content for the third accordion item.',
-    },
-    {
-      title: 'Accordion Item #4',
-      content: 'This is the content for the fourth accordion item.',
-    },
-  ];
+
+  const [proposals, setProposals] = useState<any[]>([]); // Store fetched tasks
+
+  useEffect(() => {
+    async function fetchProposals() {
+      try {
+        const data = await chairman_dao.list_proposals();
+        setProposals(data); // Updates state, triggers re-render
+      } catch (error) {
+        console.error("Error fetching proposals:", error);
+      }
+    }
+
+    fetchProposals();
+  }, []); // Empty dependency array = runs only on mount
 
   return (
     <Container id="proposals" className="proposals">
       <Row>
         <Col xs={12} md={6} id="proposed-tasks" className="taskColumn">
           <h2>Open Proposals</h2>
-          <AccordionColumns accordionData={accordionData} />
+          <AccordionColumns accordionData={proposals.map(proposal => ({
+            title: proposal.title || "Unnamed Task", // Adjust based on actual structure
+            content: proposal.description || "No description available"
+          }))}/>
           <Container>
             <Row>
               <Col xs={12} className="task mb-3">
@@ -37,7 +39,10 @@ const Proposals: React.FC = () => {
         </Col>
         <Col xs={12} md={6} id="active-tasks" className="taskColumn">
           <h2>Proposal History</h2>
-          <AccordionColumns accordionData={accordionData} />
+          <AccordionColumns accordionData={proposals.map(proposal => ({
+            title: proposal.title || "Unnamed Task", // Adjust based on actual structure
+            content: proposal.description || "No description available"
+          }))}/>
         </Col>
       </Row>
     </Container>

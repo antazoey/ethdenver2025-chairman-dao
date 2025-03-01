@@ -4,13 +4,12 @@ Brought to you by the Snek-oil Shillers.
 
 ## Project Idea
 
-TODO: Sam please fill this part out with a brief overview of the project.
+Chairman DAO is a DAO framework for worker-owned cooperatives built on ICP.
 
-## Install
+## Prerequisites
 
-Ensure you have `dfx` installed by following [this guide](https://internetcomputer.org/docs/current/developer-docs/getting-started/install).
-
-Install Rust via:
+* `dfx` tool: follow [this guide](https://internetcomputer.org/docs/current/developer-docs/getting-started/install)
+* Rust, including `wasm32-unknown-unknown`:
 
 ```shell
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
@@ -18,81 +17,67 @@ rustup default stable
 rustup target add wasm32-unknown-unknown
 ```
 
-Make sure NPM is installed and install the typescript project:
+* NPM and typescript
+
+## Install
+
+Once all prerequisites are installed, install the project by doing:
 
 ```shell
 npm install
 ```
 
-Install the React FE via:
+## Running a DAO
 
-```shell
-# install Node
-npm create vite@4.1.0
-```
-
-## Running the project
-
-First, setup the project:
+First, ensure you have the canisters created for your instance by running:
 
 ```shell
 npm run setup
 ```
 
-Then, build it:
+All the canister should have been created.
+Next, you can build the service by doing:
 
 ```shell
 npm run build
 ```
 
-Finally, launch the dev server:
+**NOTE**: For some reason, at this point I have to edit the `src/declarations/chairman_dao/index.js` declaration file to hardcode the canister ID in the `process.env:
 
-```shell
-npm start
+```typescript
+const process = {
+  env: {
+    CANISTER_ID_CHAIRMAN_DAO: "<CANISETER_ID",
+    DFX_NETWORK: "local",
+  }
+}
 ```
 
-Launch the FE by doing:
+If you are using the local ICP network, run:
 
 ```shell
-cd web
-npm run dev
+dfx start --background --clean
 ```
 
-## Backend
-
-The backend is powered by the [Internet Computer Protocol](https://internetcomputer.org/).
-If making changes, first see the [Contributing](#Developing) section.
-
-First, start the local developer replica:
-
-```shell
-dfx start --background
-```
-
-Next, generate the canister ID:
-
-```shell
-dfx canister create chairman_dao
-```
-
-Now we can build the canister (if you haven't already!):
-
-```shell
-cargo build --release --target wasm32-unknown-unknown --package chairman_dao
-```
-
-The above three steps are also available in the `setup.sh` script in the root of the project.
-
-To deploy the canister as your backend, run the `deploy` command:
+Now that the service is built and the canisters are created, you can deploy the code to the canisters by running:
 
 ```shell
 dfx deploy
 ```
 
-And fill out the details for your `ChairmanDao` instance.
-It should also launch an instance URL for you to call methods on the instance from the browser.
+**NOTE**: To deploy a demo coffee-shop DAO, run the `deploy_demo` script:
 
-To teardown the network, run:
+```shell
+npm run deploy-demo
+```
+
+Launch the development server to see your DAO:
+
+```shell
+npm start
+```
+
+To teardown your development network, run:
 
 ```
 dfx stop
@@ -100,6 +85,7 @@ dfx stop
 
 ### Developing
 
+If you make changes to the server, you will need to re-generate the candid files.
 First, build the service:
 
 ```shell

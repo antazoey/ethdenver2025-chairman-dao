@@ -4,7 +4,9 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "setup": "npm i && dfx canister create chairman_dao && dfx generate chairman_dao && dfx deploy",
+    "setup": "npm i && dfx canister create chairman_dao && dfx generate chairman_dao",
+    "deploy": "dfx deploy",
+    "deploy-demo": "./deploy_demo.sh",
     "start": "vite --port 3000",
     "build": "tsc && vite build"
   },

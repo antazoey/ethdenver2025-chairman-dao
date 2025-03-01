@@ -1,7 +1,7 @@
 import ReactDOM from 'react-dom/client';
 import App from './App';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import './index.css';
+import './styles/index.css';
 import { ActorProvider, AgentProvider } from '@ic-reactor/react';
 import React from 'react';
 import { canisterId, idlFactory } from './declarations/chairman_dao';
