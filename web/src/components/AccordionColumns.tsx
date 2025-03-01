@@ -2,7 +2,7 @@ import '../styles/AccordionColumns.css';
 import React, {useState} from 'react';
 import { Accordion, Button, Col, Container, Row } from 'react-bootstrap';
 
-enum Valence {
+export enum Valence {
   'None',
   'Health',
   'Spirit',
@@ -53,9 +53,9 @@ const AccordionColumns: React.FC<AccordionColumnsProps> = ({ accordionData, clas
                       {item.title}
                     </Col>
                     <Col md="3">
-                      <div className="icon-stack">
-                        <div>{item.health}<img src="../assets/heart-icon.png" alt="" style={{ width: '24px', height: '24px' }} /></div>
-                        <div>{item.spirit}<img src="../assets/spirit-icon.png" alt="" style={{ width: '24px', height: '24px' }} /></div>
+                      <div className="icon-stack icon-stack-right">
+                        {item.health && (<div>{item.health}<img src="../assets/heart-icon.png" alt="" style={{ width: '24px', height: '24px' }} /></div>)}
+                        {item.spirit && (<div>{item.spirit}<img src="../assets/spirit-icon.png" alt="" style={{ width: '24px', height: '24px' }} /></div>)}
                       </div>
                     </Col>
                   </Row>

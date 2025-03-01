@@ -88,7 +88,7 @@
   height: 100%;
   background-color: rgba(160, 160, 160, 0.3);
   z-index: 10;
-  pointer-events: none; /* Ensure the overlay does not interfere with interactions */
+  pointer-events: none; /* Ensure does not interfere with interactions */
 }
 
 .voted-already .accordion-header-overlay::before {
@@ -98,6 +98,10 @@
 .icon-stack {
     display: flex;
     flex-direction: column;
-    align-items: self-end;
-    margin-right: 8px; /* Adjust spacing as needed */
+    align-items: center;
+    margin-right: 8px;
   }
+
+.icon-stack-right {
+    align-items: self-end;
+}

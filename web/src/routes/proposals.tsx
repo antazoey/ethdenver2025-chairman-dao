@@ -2,11 +2,13 @@ import AccordionColumns from '../components/AccordionColumns';
 import { Container, Row, Col } from 'react-bootstrap';
 import React, {useEffect, useState} from 'react';
 import {chairman_dao} from "../declarations/chairman_dao";
+import { useNavigate } from 'react-router-dom';
 
 const Proposals: React.FC = () => {
 
   const [proposals, setProposals] = useState<any[]>([]); // Store fetched tasks
 
+  const navigate = useNavigate();
   useEffect(() => {
     async function fetchProposals() {
       try {
@@ -20,8 +22,26 @@ const Proposals: React.FC = () => {
     fetchProposals();
   }, []); // Empty dependency array = runs only on mount
 
+  const handleNavigateToTasks = () => {
+    navigate('/');
+  };
+
   return (
     <Container id="proposals" className="proposals">
+      <Row>
+        <Col xs={12} md={6}>
+          <div className="icon-stack">
+            <img src="../assets/heart-icon.png" alt="" style={{ width: '192px', height: '192px' }} />
+            <h3>24.3</h3>
+          </div>
+        </Col>
+        <Col xs={12} md={6}>
+          <div className="icon-stack">
+            <img src="../assets/spirit-icon.png" alt="" style={{ width: '192px', height: '192px' }} />
+            <h3>7.2</h3>
+          </div>
+        </Col>
+      </Row>
       <Row>
         <Col xs={12} md={6} id="proposed-tasks" className="taskColumn">
           <h2>Open Proposals</h2>
@@ -34,8 +54,13 @@ const Proposals: React.FC = () => {
           }))}/>
           <Container>
             <Row>
-              <Col xs={12} className="task mb-3">
+              <Col xs={12} className="task mb-9">
                 <button className="button-secondary">Add Proposal</button>
+              </Col>
+            </Row>
+            <Row>
+              <Col xs={12} className="task mb-3">
+                <button onClick={handleNavigateToTasks} className="button-primary">Go to Tasks</button>
               </Col>
             </Row>
           </Container>

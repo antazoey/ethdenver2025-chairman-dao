@@ -1,5 +1,5 @@
 import '../styles/ProgressBar.css';
-import AccordionColumns from '../components/AccordionColumns';
+import AccordionColumns, {Valence} from '../components/AccordionColumns';
 import CreateTaskForm from '../components/CreateTaskForm';
 import EstimateForm from '../components/EstimateForm';  
 import { Col, Container, Modal, Row, ProgressBar, Button } from 'react-bootstrap';
@@ -120,7 +120,10 @@ const Tasks: React.FC = () => {
               .map(task => ({
                 id: task.id,
                 title: task.title,
-                content: task.description
+                content: task.description,
+                health: Number(task.estimated_health),
+                spirit: Number(task.estimated_spirit),
+                valence: Number(task.estimated_health) > Number(task.estimated_spirit) ? Valence.Health : Valence.Spirit
               }))}
             classPrefix={'task'}
             onClick={handleShowJudgeModal}
