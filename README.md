@@ -47,7 +47,7 @@ npm run build
 ```typescript
 const process = {
   env: {
-    CANISTER_ID_CHAIRMAN_DAO: "<CANISETER_ID",
+    CANISTER_ID_CHAIRMAN_DAO: "<CANISTER_ID>",
     DFX_NETWORK: "local",
   }
 }
