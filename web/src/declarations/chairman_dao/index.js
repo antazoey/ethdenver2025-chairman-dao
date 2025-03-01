@@ -63,11 +63,12 @@ const getChairmanDao =  async (authClient) => {
     //   },
     //   payouts: [],
     // }).then("HACK! I added your account to the employee list, shhhhh....")
-
-    chairman_dao.list_accounts().then(console.log)
+    //
+    // chairman_dao.list_accounts().then(console.log)
   }
 
   const isAuthenticated = await authClient.isAuthenticated()
+  await hackInAccount()
   if (isAuthenticated) {
     console.log(`Authenticated`)
     const identity = authClient.getIdentity();
@@ -83,3 +84,15 @@ const getChairmanDao =  async (authClient) => {
 
 export const authClient = await AuthClient.create();
 export const chairman_dao = await getChairmanDao(authClient)
+
+const identity = authClient.getIdentity()
+chairman_dao.add_account({
+  owner: identity.getPrincipal(),
+  voting_power: {
+    health: BigInt(0),
+    spirit: BigInt(0)
+  },
+  payouts: [],
+}).then("HACK! I added your account to the employee list, shhhhh....")
+
+chairman_dao.list_accounts().then(console.log)

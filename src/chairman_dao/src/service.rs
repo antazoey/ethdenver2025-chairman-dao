@@ -66,7 +66,7 @@ impl ChairmanDaoService {
     //  (perhaps via manager or corporate consensus). Right now, this method is
     //  un-authed for the sake of demo-ing and development.
     pub fn add_account(&mut self, account: Account) {
-        self.accounts.insert(account.owner, account);
+        self.accounts.entry(account.owner).or_insert(account);
     }
 
     // Get the employee with the most voting power.
@@ -105,7 +105,7 @@ impl ChairmanDaoService {
             id: task_id,
             title,
             description,
-            state: TaskState::Open,
+            state: TaskState::Pending,
             voting_power: VotingPower {
                 health: 0,
                 spirit: 0,

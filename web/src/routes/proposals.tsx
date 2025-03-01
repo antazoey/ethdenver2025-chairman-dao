@@ -25,7 +25,9 @@ const Proposals: React.FC = () => {
       <Row>
         <Col xs={12} md={6} id="proposed-tasks" className="taskColumn">
           <h2>Open Proposals</h2>
-          <AccordionColumns accordionData={proposals.map(proposal => ({
+          <AccordionColumns accordionData={
+            proposals.filter(proposal => proposal.state.Open === null)
+            .map(proposal => ({
             title: proposal.title || "Unnamed Task", // Adjust based on actual structure
             content: proposal.description || "No description available"
           }))}/>
@@ -39,7 +41,9 @@ const Proposals: React.FC = () => {
         </Col>
         <Col xs={12} md={6} id="active-tasks" className="taskColumn">
           <h2>Proposal History</h2>
-          <AccordionColumns accordionData={proposals.map(proposal => ({
+          <AccordionColumns accordionData={
+            proposals.filter(proposal => proposal.state.Open === undefined)
+            .map(proposal => ({
             title: proposal.title || "Unnamed Task", // Adjust based on actual structure
             content: proposal.description || "No description available"
           }))}/>
