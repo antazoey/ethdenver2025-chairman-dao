@@ -4,7 +4,7 @@ import { Accordion, Col, Container, Row } from 'react-bootstrap';
 
 enum Valence {
   'None',
-  'Heart',
+  'Health',
   'Spirit',
 }
 
@@ -23,7 +23,7 @@ interface AccordionColumnsProps {
 
 function getStyleNameFromValence(valence:Valence) {
   if (valence) {
-    if (valence == Valence.Heart){ return 'primarily-heart'}
+    if (valence == Valence.Health){ return 'primarily-health'}
     else if (valence == Valence.Spirit) { return 'primarily-spirit'}
   }
   return ''
