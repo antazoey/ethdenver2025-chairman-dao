@@ -27,13 +27,13 @@ type Result_1 = variant { Ok : nat64; Err : text };
 type Task = record {
   id : nat64;
   claims : vec Claim;
+  estimated_spirit : nat64;
   title : text;
-  estimate_health : nat64;
+  estimated_health : nat64;
   ratings : vec record { principal; VotingPower };
   description : text;
   state : TaskState;
   notes : vec TaskNote;
-  estimate_spirit : nat64;
   voting_power : VotingPower;
 };
 type TaskNote = record { note : text; author : principal };

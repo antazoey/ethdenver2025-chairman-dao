@@ -68,8 +68,8 @@ pub struct Task {
     pub ratings: HashMap<Principal, VotingPower>,
 
     // When creating a task, the user will give it an estimated power
-    pub estimate_health: u64,
-    pub estimate_spirit: u64,
+    pub estimated_health: u64,
+    pub estimated_spirit: u64,
 }
 
 #[derive(Clone, Debug, CandidType, Deserialize)]
