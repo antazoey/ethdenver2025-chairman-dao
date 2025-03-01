@@ -17,9 +17,15 @@ ARGUMENTS="(record { \
       record { id = 0; title = \"Storms Abrewin' Folk Night\"; description = \"I upsold a few tickets to an upcoming show in the coffee shop, increasing revenue.\"; state = variant { Pending }; voting_power = record { health = 10; spirit = 0 }; claims = vec {}; notes = vec {}; ratings = vec {\
         record { principal \"${ALICE}\"; record { health = 8; spirit = 4 } }; \
         record { principal \"${BOB}\"; record { health = 6; spirit = 3 } }; \
+        record { principal \"${CHRIS}\"; record { health = 6; spirit = 3 } }; \
       }; estimated_health = 8; estimated_spirit = 4 }; \
-      record { id = 1; title = \"New TikTok marketing videos\"; description = \"Over the weekend, I made TikToks about our brand.\"; state = variant { Pending }; voting_power = record { health = 0; spirit = 0 }; claims = vec {}; notes = vec {}; ratings = vec {}; estimated_health = 1; estimated_spirit = 3  }; \
-      record { id = 2; title = \"Landed a large electronic-order sale\"; description = \"So many events! A huge Ethereum convention is coming to town and needs coffee pronto.\"; state = variant { Pending }; voting_power = record { health = 0; spirit = 0 }; claims = vec {}; notes = vec {}; ratings = vec {}; estimated_health = 5; estimated_spirit = 2  }; \
+      record { id = 1; title = \"New TikTok marketing videos\"; description = \"Over the weekend, I made TikToks about our brand.\"; state = variant { Pending }; voting_power = record { health = 0; spirit = 0 }; claims = vec {}; notes = vec {}; ratings = vec {\
+        record { principal \"${ALICE}\"; record { health = 8; spirit = 4 } }; \
+      }; estimated_health = 1; estimated_spirit = 3  }; \
+      record { id = 2; title = \"Landed a large electronic-order sale\"; description = \"So many events! A huge Ethereum convention is coming to town and needs coffee pronto.\"; state = variant { Pending }; voting_power = record { health = 0; spirit = 0 }; claims = vec {}; notes = vec {}; ratings = vec {\
+        record { principal \"${ALICE}\"; record { health = 8; spirit = 4 } }; \
+        record { principal \"${BOB}\"; record { health = 6; spirit = 3 } }; \
+      }; estimated_health = 5; estimated_spirit = 2  }; \
       record { id = 3; title = \"Fix the water heater\"; description = \"We will have hot water again!\"; state = variant { Open }; voting_power = record { health = 4; spirit = 7 }; claims = vec {\
         record { account = principal \"${ALICE}\"; percentage = 0.0 }; \
         record { account = principal \"${BOB}\"; percentage = 0.0 }; \

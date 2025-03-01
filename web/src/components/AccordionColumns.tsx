@@ -1,6 +1,7 @@
 import '../styles/AccordionColumns.css';
 import React, {useState} from 'react';
 import { Accordion, Button, Col, Container, Row } from 'react-bootstrap';
+import VotingBar from './VotingBar';
 
 export enum Valence {
   'None',
@@ -51,7 +52,7 @@ const AccordionColumns: React.FC<AccordionColumnsProps> = ({ accordionData, clas
               >
                 <Container>
                   {item.showBar ?? (<Row>
-                    
+                    <VotingBar />
                   </Row>)}
                   <Row>
                     <Col md="9">
