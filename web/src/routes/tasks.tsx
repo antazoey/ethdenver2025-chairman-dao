@@ -5,12 +5,15 @@ import { Col, Container, Modal, Row, ProgressBar, Button } from 'react-bootstrap
 import React, { useState, useEffect } from 'react';
 import { chairman_dao } from "../declarations/chairman_dao";
 import { divideAndDisplayAsPercentage } from '../utils/utils';
+import { useNavigate } from 'react-router-dom';
 
 const Tasks: React.FC = () => {
   const [tasks, setTasks] = useState<any[]>([]); // Store fetched tasks
   const [showModal, setShowModal] = useState(false); // State for modal visibility
   const [newTaskTitle, setNewTaskTitle] = useState<string>();
   const [newTaskDescription, setNewTaskDescription] = useState<string>();
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     async function fetchTasks() {
@@ -34,6 +37,10 @@ const Tasks: React.FC = () => {
     console.log(`New task title ${newTaskTitle}, descriptions: ${newTaskDescription}`);
     chairman_dao.submit_task(newTaskTitle || '', newTaskDescription || '', voting_power).then(console.log)
     setShowModal(false);
+  };
+
+  const handleNavigateToProposals = () => {
+    navigate('/proposals');
   };
 
   return (
@@ -81,6 +88,13 @@ const Tasks: React.FC = () => {
                 content: task.description
               }))}
           />
+          <Container className='desktop-only-spacer'>
+            <Row>
+              <Col xs={12} className='task mb-3'>
+                <Button onClick={handleNavigateToProposals}>Go to Proposals</Button>
+              </Col>
+            </Row>
+          </Container>
         </Col>
       </Row>
 

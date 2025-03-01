@@ -27,3 +27,10 @@
 .tasks {
   height: 100vh;
 }
+
+/* Desktop-only styles */
+@media (min-width: 1024px) {
+  .desktop-only-spacer {
+    margin-top: 200px;
+  }
+}
