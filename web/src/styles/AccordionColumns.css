@@ -40,9 +40,9 @@
     background-color: #F9F4E9;
 }
 
-.accordion-button:visited, 
-.accordion-button:not(.collapsed),
-.accordion-button.collapsed:visited {
+.primarily-health .accordion-button:visited, 
+.primarily-health .accordion-button:not(.collapsed),
+.primarily-health .accordion-button.collapsed:visited {
     background-color: #F9E4D9;
 }
 
