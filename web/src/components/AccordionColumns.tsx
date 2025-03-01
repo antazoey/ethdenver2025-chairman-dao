@@ -1,6 +1,6 @@
 import '../styles/AccordionColumns.css';
-import React from 'react';
-import { Accordion, Col, Container, Row } from 'react-bootstrap';
+import React, {useState} from 'react';
+import { Accordion, Button, Col, Container, Row } from 'react-bootstrap';
 
 enum Valence {
   'None',
@@ -10,18 +10,21 @@ enum Valence {
 
 // Define the interface for the accordion data
 interface AccordionItem {
+  id: string;
   title: string;
   content?: string;
   valence?: number;
   overlayWidth?: string; // Add an optional overlayWidth property
   health?: number;
   spirit?: number;
+  alreadyVoted?: boolean;
 }
 
 // Define the interface for the component props
 interface AccordionColumnsProps {
   accordionData: AccordionItem[];
   classPrefix?: string;
+  onClick?: (taskId: string) => void;
 }
 
 function getStyleNameFromValence(valence: Valence) {
@@ -32,13 +35,14 @@ function getStyleNameFromValence(valence: Valence) {
   return ''
 }
 
-const AccordionColumns: React.FC<AccordionColumnsProps> = ({ accordionData, classPrefix }) => {
+const AccordionColumns: React.FC<AccordionColumnsProps> = ({ accordionData, classPrefix, onClick }) => {
+    const [selectedTaskId, setSelectedTaskId] = useState<string | null>(null); // State for selected task ID
   return (
     <Container>
       <Row>
         {accordionData.map((item, index) => (
           <Col xs={12} key={index} className={classPrefix + ' mb-3 ' + getStyleNameFromValence(item.valence as Valence)}>
-            <Accordion defaultActiveKey="0">
+            <Accordion defaultActiveKey="0" className={item.alreadyVoted ? 'voted-already' : ''}>
               <Accordion.Header
                 className="accordion-header-overlay"
                 style={{ '--overlay-width': item.overlayWidth || '0%' } as React.CSSProperties}
@@ -57,7 +61,22 @@ const AccordionColumns: React.FC<AccordionColumnsProps> = ({ accordionData, clas
                   </Row>
                 </Container>
               </Accordion.Header>
-              {item.content && <Accordion.Body>{item.content}</Accordion.Body>}
+              <Accordion.Body>
+                <Container>
+                  <Row className='mb-3'>
+                    <Col>
+                      {item.content}
+                    </Col>
+                  </Row>
+                  {!item.alreadyVoted && (
+                    <Row>
+                      <Col>
+                        <Button onClick={() => onClick(item.id)}>Rate Task</Button>
+                      </Col>
+                    </Row>
+                  )}
+                </Container>
+              </Accordion.Body>
             </Accordion>
           </Col>
         ))}

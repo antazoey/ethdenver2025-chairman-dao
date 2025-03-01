@@ -28,6 +28,7 @@ const Proposals: React.FC = () => {
           <AccordionColumns accordionData={
             proposals.filter(proposal => proposal.state.Open === null)
             .map(proposal => ({
+              id: proposal.id,
             title: proposal.title || "Unnamed Task", // Adjust based on actual structure
             content: proposal.description || "No description available"
           }))}/>
@@ -44,6 +45,7 @@ const Proposals: React.FC = () => {
           <AccordionColumns accordionData={
             proposals.filter(proposal => proposal.state.Open === undefined)
             .map(proposal => ({
+              id: proposal.id,
             title: proposal.title || "Unnamed Task", // Adjust based on actual structure
             content: proposal.description || "No description available"
           }))}/>

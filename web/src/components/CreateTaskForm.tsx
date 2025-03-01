@@ -1,6 +1,6 @@
 import Form from 'react-bootstrap/Form';
 
-function CreateTaskForm({handleTitleSet, handleDescriptionSet}) {
+function CreateTaskForm({handleTitleSet, handleDescriptionSet, handleHealthSet, handleSpiritSet}) {
   return (
     <Form>
       <Form.Group className='mb-3' controlId='taskForm.ControlInput1'>
@@ -23,7 +23,7 @@ function CreateTaskForm({handleTitleSet, handleDescriptionSet}) {
         <Form.Control
           placeholder='Enter a number between 1 and 10'
           type='number'
-          onChange={(e) => handleDescriptionSet(e.target.value)}
+          onChange={(e) => handleHealthSet(e.target.value)}
         />
       </Form.Group>
       <Form.Group className='mb-3' controlId='taskForm.ControlInput3'>
@@ -31,7 +31,7 @@ function CreateTaskForm({handleTitleSet, handleDescriptionSet}) {
         <Form.Control
           placeholder='Enter a number between 1 and 10'
           type='number'
-          onChange={(e) => handleDescriptionSet(e.target.value)}
+          onChange={(e) => handleSpiritSet(e.target.value)}
         />
       </Form.Group>
     </Form>

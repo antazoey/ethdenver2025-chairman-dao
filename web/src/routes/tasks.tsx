@@ -1,6 +1,7 @@
 import '../styles/ProgressBar.css';
 import AccordionColumns from '../components/AccordionColumns';
 import CreateTaskForm from '../components/CreateTaskForm';
+import EstimateForm from '../components/EstimateForm';  
 import { Col, Container, Modal, Row, ProgressBar, Button } from 'react-bootstrap';
 import React, { useState, useEffect } from 'react';
 import { chairman_dao } from "../declarations/chairman_dao";
@@ -9,9 +10,14 @@ import { useNavigate } from 'react-router-dom';
 
 const Tasks: React.FC = () => {
   const [tasks, setTasks] = useState<any[]>([]); // Store fetched tasks
-  const [showModal, setShowModal] = useState(false); // State for modal visibility
-  const [newTaskTitle, setNewTaskTitle] = useState<string>();
-  const [newTaskDescription, setNewTaskDescription] = useState<string>();
+  const [showModal, setShowModal] = useState(false);
+  const [showTaskModal, setShowTaskModal] = useState(false);
+  const [showJudgeModal, setShowJudgeModal] = useState(false);
+  const [newTaskTitle, setNewTaskTitle] = useState<string>('');
+  const [newTaskDescription, setNewTaskDescription] = useState<string>('');
+  const [newTaskHealth, setNewTaskHealth] = useState<number>(0);
+  const [newTaskSpirit, setNewTaskSpirit] = useState<number>(0);
+  const [selectedTaskId, setSelectedTaskId] = useState<string | null>(null); // State for selected task ID
 
   const navigate = useNavigate();
 
@@ -29,18 +35,43 @@ const Tasks: React.FC = () => {
   }, []); // Empty dependency array = runs only on mount
 
   const handleShowModal = () => setShowModal(true);
-  const handleCloseModal = () => setShowModal(false);
+  const handleShowTaskModal = () => setShowTaskModal(true);
+  const handleShowJudgeModal = () => setShowJudgeModal(true);
+  const handleCloseModal = () => {
+    setShowModal(false);
+    setShowTaskModal(false);
+    setShowJudgeModal(false);
+  };
 
   const handleSubmitTask = () => {
     console.log(chairman_dao)
-    let voting_power = { health: BigInt(0), spirit: BigInt(0) }
+    let voting_power = { health: BigInt(newTaskHealth), spirit: BigInt(newTaskSpirit) }
     console.log(`New task title ${newTaskTitle}, descriptions: ${newTaskDescription}`);
     chairman_dao.submit_task(newTaskTitle || '', newTaskDescription || '', voting_power).then(console.log)
     setShowModal(false);
   };
 
+  const handleSubmitRating = () => {
+    console.log(chairman_dao)
+    let voting_power = { health: BigInt(newTaskHealth), spirit: BigInt(newTaskSpirit) }
+    chairman_dao.rate_task(BigInt(selectedTaskId), voting_power).then(console.log)
+    setShowTaskModal(false);
+  };
+
+  const handleSubmitJudging = () => {
+    console.log(chairman_dao)
+    let voting_power = { health: BigInt(newTaskHealth), spirit: BigInt(newTaskSpirit) }
+    //chairman_dao.judge_claimant(BigInt(0), voting_power).then(console.log)
+    setShowTaskModal(false);
+  };
+
   const handleNavigateToProposals = () => {
     navigate('/proposals');
+  };
+
+  const handleRateTaskClick = (taskId: string) => {
+    setSelectedTaskId(taskId);
+    setShowTaskModal(true);
   };
 
   return (
@@ -52,13 +83,16 @@ const Tasks: React.FC = () => {
             accordionData={tasks
               .filter(task => task.state.Pending === null) // Filter only "Pending" tasks
               .map(task => ({
+                id: task.id,
                 title: task.title,
                 content: task.description,
                 overlayWidth: divideAndDisplayAsPercentage(task.ratings.length, 4),
                 health: Number(task.estimated_health),
                 spirit: Number(task.estimated_spirit),
+                alreadyVoted: task.ratings.some(([principal]) => principal === 'principal')
               }))}
             classPrefix={'task'}
+            onClick={handleRateTaskClick}
           />
           <Container>
             <Row>
@@ -84,9 +118,12 @@ const Tasks: React.FC = () => {
             accordionData={tasks
               .filter(task => task.state.Open === null) // Filter only "Open" tasks
               .map(task => ({
+                id: task.id,
                 title: task.title,
                 content: task.description
               }))}
+            classPrefix={'task'}
+            onClick={handleShowJudgeModal}
           />
           <Container className='desktop-only-spacer'>
             <Row>
@@ -104,13 +141,60 @@ const Tasks: React.FC = () => {
           <Modal.Title>Add Task</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <CreateTaskForm handleTitleSet={setNewTaskTitle} handleDescriptionSet={setNewTaskDescription} />
+          <CreateTaskForm 
+            handleTitleSet={setNewTaskTitle} 
+            handleDescriptionSet={setNewTaskDescription} 
+            handleHealthSet={setNewTaskHealth} 
+            handleSpiritSet={setNewTaskSpirit} 
+          />
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleCloseModal}>
             Cancel
           </Button>
           <Button variant="primary" onClick={handleSubmitTask}>
+            Add
+          </Button>
+        </Modal.Footer>
+      </Modal>
+      <Modal show={showTaskModal} onHide={handleCloseModal}>
+        <Modal.Header closeButton>
+          <Modal.Title>Rate Task</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <EstimateForm 
+            handleHealthSet={setNewTaskHealth} 
+            handleSpiritSet={setNewTaskSpirit}
+            handleIdSet={setSelectedTaskId}
+          />
+          <p>Rating task with ID: {selectedTaskId}</p>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleCloseModal}>
+            Cancel
+          </Button>
+          <Button variant="primary" onClick={handleSubmitRating}>
+            Add
+          </Button>
+        </Modal.Footer>
+      </Modal>
+      <Modal show={showJudgeModal} onHide={handleCloseModal}>
+        <Modal.Header closeButton>
+          <Modal.Title>Judge Task</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <EstimateForm 
+            handleHealthSet={setNewTaskHealth} 
+            handleSpiritSet={setNewTaskSpirit}
+            handleIdSet={setSelectedTaskId}
+          />
+          <p>Rating task with ID: {selectedTaskId}</p>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleCloseModal}>
+            Cancel
+          </Button>
+          <Button variant="primary" onClick={handleSubmitJudging}>
             Add
           </Button>
         </Modal.Footer>
