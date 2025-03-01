@@ -112,7 +112,9 @@ impl ChairmanDaoService {
             },
             claims: Vec::new(),
             notes: Vec::new(),
-            ratings: HashMap::from([(ic_cdk::caller(), rating)]),
+            ratings: HashMap::from([(ic_cdk::caller(), rating.clone())]),
+            estimate_health: rating.health,
+            estimate_spirit: rating.spirit,
         };
         self.tasks.push(task);
         Ok(task_id)

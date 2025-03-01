@@ -66,6 +66,10 @@ pub struct Task {
     // Each employee has the chance to rate the task's voting power,
     // which happens in the "Open" state.
     pub ratings: HashMap<Principal, VotingPower>,
+
+    // When creating a task, the user will give it an estimated power
+    pub estimate_health: u64,
+    pub estimate_spirit: u64,
 }
 
 #[derive(Clone, Debug, CandidType, Deserialize)]
