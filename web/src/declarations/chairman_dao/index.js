@@ -4,11 +4,13 @@ import { Actor, HttpAgent } from "@dfinity/agent";
 import { idlFactory } from "./chairman_dao.did.js";
 export { idlFactory } from "./chairman_dao.did.js";
 
+import {AuthClient} from "@dfinity/auth-client";
 
 const process = {
   env: {
     CANISTER_ID_CHAIRMAN_DAO: "bkyz2-fmaaa-aaaaa-qaaaq-cai",
     DFX_NETWORK: "local",
+    LOGIN_URL: "http://be2us-64aaa-aaaaa-qaabq-cai.localhost:4943/"
   }
 }
 
@@ -47,4 +49,37 @@ export const createActor = (canisterId, options = {}) => {
   });
 };
 
-export const chairman_dao = canisterId ? createActor(canisterId) : undefined;
+const getChairmanDao =  async (authClient) => {
+  // UNCOMMENT TO LOG OUT
+  //authClient.logout()
+
+  const hackInAccount = () => {
+    console.log("HACK")
+    // chairman_dao.add_account({
+    //   owner: identity.getPrincipal(),
+    //   voting_power: {
+    //     health: BigInt(0),
+    //     spirit: BigInt(0)
+    //   },
+    //   payouts: [],
+    // }).then("HACK! I added your account to the employee list, shhhhh....")
+
+    chairman_dao.list_accounts().then(console.log)
+  }
+
+  const isAuthenticated = await authClient.isAuthenticated()
+  if (isAuthenticated) {
+    console.log(`Authenticated`)
+    const identity = authClient.getIdentity();
+    const agent = new HttpAgent({ identity });
+    return createActor(canisterId, { agent });
+
+  } else {
+    console.log("Not authenticated")
+
+    return createActor(canisterId);
+  }
+}
+
+export const authClient = await AuthClient.create();
+export const chairman_dao = await getChairmanDao(authClient)

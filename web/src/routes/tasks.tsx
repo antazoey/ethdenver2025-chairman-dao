@@ -29,9 +29,10 @@ const Tasks: React.FC = () => {
   const handleCloseModal = () => setShowModal(false);
 
   const handleSubmitTask = () => {
-    let voting_power = {health: 0, spirit: 0};
+    console.log(chairman_dao)
+    let voting_power = { health: BigInt(0), spirit: BigInt(0) }
     console.log(`New task title ${newTaskTitle}, descriptions: ${newTaskDescription}`);
-    chairman_dao.submit_task(newTaskTitle || '', newTaskDescription || '', voting_power).then(console.log);
+    chairman_dao.submit_task(newTaskTitle || '', newTaskDescription || '', voting_power).then(console.log)
     setShowModal(false);
   };
 

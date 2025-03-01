@@ -35,3 +35,4 @@ ARGUMENTS="(record { \
 )"
 
 dfx deploy chairman_dao --argument "${ARGUMENTS}" --yes
+dfx deploy internet_identity

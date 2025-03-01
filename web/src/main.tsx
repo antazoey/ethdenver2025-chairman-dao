@@ -8,6 +8,12 @@ import { canisterId, idlFactory } from './declarations/chairman_dao';
 
 import Tasks from './routes/tasks';
 import Proposals from './routes/proposals';
+import Login from "./components/Login";
+import { authClient } from "./services/auth";
+
+const isAuth = await authClient.isAuthenticated()
+
+const root = isAuth ? <Tasks /> : <Login />
 
 const router = createBrowserRouter([
   {
@@ -16,11 +22,15 @@ const router = createBrowserRouter([
     children: [
       {
         path: '',
-        element: <Tasks />,
+        element: root,
       },
       {
         path: 'proposals',
         element: <Proposals />,
+      },
+      {
+        path: 'login',
+        element: <Login />,
       },
     ],
   },
