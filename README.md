@@ -68,7 +68,16 @@ dfx deploy
 **NOTE**: To deploy a demo coffee-shop DAO, run the `deploy_demo` script:
 
 ```shell
+# First, create the Alice, Bob, and Chris identities if you need to.
+dfx identity get-principal --identity Alice
+dfx identity get-principal --identity Bob
+dfx identity get-principal --identity Chris
+
+# Then, run the deploy demo script
 npm run deploy-demo
+
+# NOTE: On certain systems (windows), you may just need to run the script manually:
+./deploy_demo.sh
 ```
 
 Launch the development server to see your DAO:

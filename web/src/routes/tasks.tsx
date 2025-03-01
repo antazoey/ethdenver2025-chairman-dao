@@ -12,6 +12,7 @@ enum Valence {
 }
 
 const Tasks: React.FC = () => {
+
   const [tasks, setTasks] = useState<any[]>([]); // Store fetched tasks
   const [showModal, setShowModal] = useState(false); // State for modal visibility
 
@@ -36,10 +37,14 @@ const Tasks: React.FC = () => {
         <Row>
             <Col xs={12} md={5} id='proposed-tasks' className='taskColumn'>
             <h2>Proposed Tasks</h2>
-              <AccordionColumns accordionData={tasks.map(task => ({
-                title: task.title || "Unnamed Task", // Adjust based on actual structure
-                content: task.description || "No description available"
-              }))}/>
+              <AccordionColumns
+                accordionData={tasks
+                  .filter(task => task.state.Pending === null) // Filter only "Open" tasks
+                  .map(task => ({
+                    title: task.title || "Unnamed Task",
+                    content: task.description || "No description available"
+                  }))}
+              />
               <Container>
               <Row>
                 <Col xs={12} className='task mb-3'>
@@ -60,10 +65,14 @@ const Tasks: React.FC = () => {
             </Col>
             <Col xs={12} md={7} id='active-tasks' className='taskColumn'>
             <h2>Ready Tasks</h2>
-              <AccordionColumns accordionData={tasks.map(task => ({
-                title: task.title || "Unnamed Task", // Adjust based on actual structure
-                content: task.description || "No description available"
-              }))}/>
+              <AccordionColumns
+                accordionData={tasks
+                  .filter(task => task.state.Open === null) // Filter only "Open" tasks
+                  .map(task => ({
+                    title: task.title || "Unnamed Task",
+                    content: task.description || "No description available"
+                  }))}
+              />
             </Col>
         </Row>
 
