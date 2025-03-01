@@ -1,9 +1,9 @@
 import '../styles/ProgressBar.css';
 import AccordionColumns from '../components/AccordionColumns';
-import { Col, Container, Row, ProgressBar } from 'react-bootstrap';
+import CreateTaskForm from '../components/CreateTaskForm';
+import { Col, Container, Modal, Row, ProgressBar, Button } from 'react-bootstrap';
 import React, { useState, useEffect } from 'react';
 import { chairman_dao } from "../declarations/chairman_dao";
-import {c} from "vite/dist/node/moduleRunnerTransport.d-CXw_Ws6P";
 
 enum Valence {
   'None',
@@ -12,8 +12,8 @@ enum Valence {
 }
 
 const Tasks: React.FC = () => {
-
   const [tasks, setTasks] = useState<any[]>([]); // Store fetched tasks
+  const [showModal, setShowModal] = useState(false); // State for modal visibility
 
   useEffect(() => {
     async function fetchTasks() {
@@ -28,10 +28,13 @@ const Tasks: React.FC = () => {
     fetchTasks();
   }, []); // Empty dependency array = runs only on mount
 
+  const handleShowModal = () => setShowModal(true);
+  const handleCloseModal = () => setShowModal(false);
+
   return (
     <Container id='tasks' className='tasks'>
         <Row>
-            <Col xs={12} md={6} id='proposed-tasks' className='taskColumn'>
+            <Col xs={12} md={5} id='proposed-tasks' className='taskColumn'>
             <h2>Proposed Tasks</h2>
               <AccordionColumns accordionData={tasks.map(task => ({
                 title: task.title || "Unnamed Task", // Adjust based on actual structure
@@ -50,12 +53,12 @@ const Tasks: React.FC = () => {
               </Row>
               <Row>
               <Col xs={12} className='task mb-3'>
-                  <button className='button-primary'>Add Task</button>
+                  <Button className='button-primary' onClick={handleShowModal}>Add Task</Button>
               </Col>
               </Row>
             </Container>
             </Col>
-            <Col xs={12} md={6} id='active-tasks' className='taskColumn'>
+            <Col xs={12} md={7} id='active-tasks' className='taskColumn'>
             <h2>Ready Tasks</h2>
               <AccordionColumns accordionData={tasks.map(task => ({
                 title: task.title || "Unnamed Task", // Adjust based on actual structure
@@ -63,6 +66,24 @@ const Tasks: React.FC = () => {
               }))}/>
             </Col>
         </Row>
+
+        {/* Modal for creating a new task */}
+        <Modal show={showModal} onHide={handleCloseModal}>
+          <Modal.Header closeButton>
+            <Modal.Title>Create New Task</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <CreateTaskForm />
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={handleCloseModal}>
+              Close
+            </Button>
+            <Button variant="primary" onClick={handleCloseModal}>
+              Save Changes
+            </Button>
+          </Modal.Footer>
+        </Modal>
     </Container>
   );
 };
