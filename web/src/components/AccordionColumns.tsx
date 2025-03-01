@@ -13,6 +13,9 @@ interface AccordionItem {
   title: string;
   content?: string;
   valence?: number;
+  overlayWidth?: string; // Add an optional overlayWidth property
+  health?: number;
+  spirit?: number;
 }
 
 // Define the interface for the component props
@@ -36,10 +39,23 @@ const AccordionColumns: React.FC<AccordionColumnsProps> = ({ accordionData, clas
         {accordionData.map((item, index) => (
           <Col xs={12} key={index} className={classPrefix + ' mb-3 ' + getStyleNameFromValence(item.valence as Valence)}>
             <Accordion defaultActiveKey="0">
-              <Accordion.Header>
-                {<img src="../assets/heart-icon.png" alt="" className="me-2" style={{ width: '24px', height: '24px' }} />}
-                {<img src="../assets/spirit-icon.png" alt="" className="me-2" style={{ width: '24px', height: '24px' }} />}
-                {item.title}
+              <Accordion.Header
+                className="accordion-header-overlay"
+                style={{ '--overlay-width': item.overlayWidth || '0%' } as React.CSSProperties}
+              >
+                <Container>
+                  <Row>
+                    <Col md="8">
+                      {item.title}
+                    </Col>
+                    <Col md="4">
+                      <div className="icon-stack">
+                        <div>{item.health}<img src="../assets/heart-icon.png" alt="" style={{ width: '24px', height: '24px' }} /></div>
+                        <div>{item.spirit}<img src="../assets/spirit-icon.png" alt="" style={{ width: '24px', height: '24px' }} /></div>
+                      </div>
+                    </Col>
+                  </Row>
+                </Container>
               </Accordion.Header>
               {item.content && <Accordion.Body>{item.content}</Accordion.Body>}
             </Accordion>

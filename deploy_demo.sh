@@ -14,7 +14,9 @@ ARGUMENTS="(record { \
       record { owner = principal \"${CHRIS}\"; voting_power = record { health = 25; spirit = 30 }; payouts = vec {}; }; \
     }; \
     tasks = vec {\
-      record { id = 0; title = \"Upsold event sales\"; description = \"I upsold a few tickets to an upcoming show in the coffee shop, increasing revenue.\"; state = variant { Pending }; voting_power = record { health = 10; spirit = 0 }; claims = vec {}; notes = vec {}; ratings = vec {}; }; \
+      record { id = 0; title = \"Storms Abrewin' Folk Night\"; description = \"I upsold a few tickets to an upcoming show in the coffee shop, increasing revenue.\"; state = variant { Pending }; voting_power = record { health = 10; spirit = 0 }; claims = vec {}; notes = vec {}; ratings = vec {\
+        record { principal \"${ALICE}\"; record { health = 8; spirit = 4 } }; \
+      }; }; \
       record { id = 1; title = \"New TikTok marketing videos\"; description = \"Over the weekend, I made TikToks about our brand.\"; state = variant { Pending }; voting_power = record { health = 0; spirit = 0 }; claims = vec {}; notes = vec {}; ratings = vec {}; }; \
       record { id = 2; title = \"Handled large electronic-order sale\"; description = \"I helped our largest customer supply coffee to ETHDenver.\"; state = variant { Pending }; voting_power = record { health = 0; spirit = 0 }; claims = vec {}; notes = vec {}; ratings = vec {}; }; \
       record { id = 3; title = \"Fixed the water heater\"; description = \"We have hot water again!\"; state = variant { Open }; voting_power = record { health = 10; spirit = 0 }; claims = vec {}; notes = vec {}; ratings = vec {}; }; \
