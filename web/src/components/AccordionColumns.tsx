@@ -19,6 +19,7 @@ interface AccordionItem {
   spirit?: number;
   canVote?: boolean;
   showBar?: boolean;
+  starsToShow?: number;
 }
 
 // Define the interface for the component props
@@ -54,7 +55,9 @@ const AccordionColumns: React.FC<AccordionColumnsProps> = ({ accordionData, clas
                   </Row>)}
                   <Row>
                     <Col md="9">
-                      {item.title}
+                      {item.title} {Array.from({ length: item.starsToShow }).map((_, i) => (
+                        <img key={i} src="../assets/star-icon.png" alt="" style={{ width: '24px', height: '24px' }} />
+                      ))}
                     </Col>
                     <Col md="3">
                       <div className="icon-stack icon-stack-right">

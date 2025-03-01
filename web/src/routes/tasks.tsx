@@ -126,6 +126,7 @@ const Tasks: React.FC = () => {
                 spirit: Number(task.estimated_spirit),
                 valence: Number(task.estimated_health) > Number(task.estimated_spirit) ? Valence.Health : Valence.Spirit,
                 showBar: false,
+                starsToShow: task.claims.length,
               }))}
             classPrefix={'task'}
             onClick={handleShowJudgeModal}
