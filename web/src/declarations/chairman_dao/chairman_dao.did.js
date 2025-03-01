@@ -16,7 +16,9 @@ export const idlFactory = ({ IDL }) => {
   const Task = IDL.Record({
     'id' : IDL.Nat64,
     'claims' : IDL.Vec(Claim),
+    'estimated_spirit' : IDL.Nat64,
     'title' : IDL.Text,
+    'estimated_health' : IDL.Nat64,
     'ratings' : IDL.Vec(IDL.Tuple(IDL.Principal, VotingPower)),
     'description' : IDL.Text,
     'state' : TaskState,

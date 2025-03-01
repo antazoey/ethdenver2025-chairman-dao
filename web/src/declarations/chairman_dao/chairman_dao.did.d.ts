@@ -35,7 +35,9 @@ export type Result_1 = { 'Ok' : bigint } |
 export interface Task {
   'id' : bigint,
   'claims' : Array<Claim>,
+  'estimated_spirit' : bigint,
   'title' : string,
+  'estimated_health' : bigint,
   'ratings' : Array<[Principal, VotingPower]>,
   'description' : string,
   'state' : TaskState,

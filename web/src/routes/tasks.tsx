@@ -48,8 +48,8 @@ const Tasks: React.FC = () => {
                 title: task.title,
                 content: task.description,
                 overlayWidth: divideAndDisplayAsPercentage(task.ratings.length, 3),
-                health: task.ratings.length > 0 ? task.ratings[0].health : undefined,
-                spirit: task.ratings.length > 0 ? task.ratings[0].spirit : undefined,
+                health: task.estimated_health || undefined,
+                spirit: task.estimated_spirit || undefined,
               }))}
             classPrefix={'task'}
           />
