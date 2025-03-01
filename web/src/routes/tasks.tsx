@@ -107,7 +107,7 @@ const Tasks: React.FC = () => {
             </Row>
             <Row>
               <Col xs={12} className='task mb-3'>
-                <Button onClick={handleShowModal}>Add Task</Button>
+                <button onClick={handleShowModal} className="button-primary">Add Task</button>
               </Col>
             </Row>
           </Container>
@@ -128,7 +128,7 @@ const Tasks: React.FC = () => {
           <Container className='desktop-only-spacer'>
             <Row>
               <Col xs={12} className='task mb-3'>
-                <Button onClick={handleNavigateToProposals}>Go to Proposals</Button>
+                <button onClick={handleNavigateToProposals} className='button-secondary'>Go to Proposals</button>
               </Col>
             </Row>
           </Container>
