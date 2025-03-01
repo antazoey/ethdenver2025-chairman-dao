@@ -53,22 +53,7 @@ const getChairmanDao =  async (authClient) => {
   // UNCOMMENT TO LOG OUT
   //authClient.logout()
 
-  const hackInAccount = () => {
-    console.log("HACK")
-    // chairman_dao.add_account({
-    //   owner: identity.getPrincipal(),
-    //   voting_power: {
-    //     health: BigInt(0),
-    //     spirit: BigInt(0)
-    //   },
-    //   payouts: [],
-    // }).then("HACK! I added your account to the employee list, shhhhh....")
-    //
-    // chairman_dao.list_accounts().then(console.log)
-  }
-
   const isAuthenticated = await authClient.isAuthenticated()
-  await hackInAccount()
   if (isAuthenticated) {
     console.log(`Authenticated`)
     const identity = authClient.getIdentity();
