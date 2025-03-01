@@ -1,6 +1,6 @@
 import '../styles/AccordionColumns.css';
 import React, {useState} from 'react';
-import { Accordion, Button, Col, Container, ProgressBar, Row } from 'react-bootstrap';
+import { Accordion, Button, Col, Container, Row } from 'react-bootstrap';
 
 export enum Valence {
   'None',
@@ -17,7 +17,7 @@ interface AccordionItem {
   overlayWidth?: string; // Add an optional overlayWidth property
   health?: number;
   spirit?: number;
-  alreadyVoted?: boolean;
+  canVote?: boolean;
   showBar?: boolean;
 }
 
@@ -50,12 +50,7 @@ const AccordionColumns: React.FC<AccordionColumnsProps> = ({ accordionData, clas
               >
                 <Container>
                   {item.showBar ?? (<Row>
-                    <ProgressBar className='mb-3'>
-                      <ProgressBar variant="health" now={item.health} key={1} />
-                      <ProgressBar striped variant="health" now={item.health} key={2} />
-                      <ProgressBar striped variant="spirit" now={item.spirit} key={3} />
-                      <ProgressBar variant="spirit" now={item.spirit} key={4} />
-                    </ProgressBar>
+                    
                   </Row>)}
                   <Row>
                     <Col md="9">
@@ -77,7 +72,7 @@ const AccordionColumns: React.FC<AccordionColumnsProps> = ({ accordionData, clas
                       {item.content}
                     </Col>
                   </Row>
-                  {!item.alreadyVoted && (
+                  {item.canVote && (
                     <Row>
                       <Col>
                         <Button onClick={() => onClick(item.id)}>Rate Task</Button>

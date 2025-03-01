@@ -89,7 +89,7 @@ const Tasks: React.FC = () => {
                 overlayWidth: divideAndDisplayAsPercentage(task.ratings.length, 4),
                 health: Number(task.estimated_health),
                 spirit: Number(task.estimated_spirit),
-                alreadyVoted: task.ratings.some(([principal]) => principal === 'principal'),
+                canVote: !task.ratings.some(([principal]) => principal === 'principal'),
                 showBar: false,
               }))}
             classPrefix={'task'}
